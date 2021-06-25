@@ -2,7 +2,7 @@ import React from 'react';
 import { useContext } from 'react';
 import { timerContext } from '../../contexts/TimerContext';
 
-import "./styles.css"
+import "./styles.scss"
 
 // import { Container } from './styles';
 

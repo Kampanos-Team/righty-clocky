@@ -5,6 +5,7 @@ import {auth, firebase} from "../services/firebase"
 
 interface AuthContextData{
   signInWithGoogle: () => Promise<void>
+  handleSignOut: () => Promise<void>
   user: User |undefined
 }
 type User = {
@@ -17,8 +18,9 @@ interface AuthProviderProps{
 }
 export const authContext = createContext({} as AuthContextData)
 export function AuthProvider({children} : AuthProviderProps){
-
   const [user, setUser]= useState<User>()
+
+
   const signInWithGoogle = async () => {
     const provider = new firebase.auth.GoogleAuthProvider()
     const result  = await auth.signInWithPopup(provider)
@@ -31,22 +33,28 @@ export function AuthProvider({children} : AuthProviderProps){
       }
       console.log(result)
     }
-    // useEffect(() => {
-    //   const unsubscribe = auth.onAuthStateChanged(user => {
-    //     if(user){
-    //       const {displayName, photoURL, uid} = user
-    //       if(!displayName || !photoURL){
-    //         throw new Error("Missing information")
-    //       }
-    //       setUser({id:uid, name:displayName, avatar: photoURL})
-    //     }
-    //   })
-    //   return () => {
-    //     unsubscribe()
-    //   }
-    // },[])
+
+    const handleSignOut = async () => {
+      await auth.signOut()
+      setUser(undefined)
+      console.log('User signed out!');
+    }
+    useEffect(() => {
+      const unsubscribe = auth.onAuthStateChanged(user => {
+        if(user){
+          const {displayName, photoURL, uid} = user
+          if(!displayName || !photoURL){
+            throw new Error("Missing information")
+          }
+          setUser({id:uid, name:displayName, avatar: photoURL})
+        }
+      })
+      return () => {
+        unsubscribe()
+      }
+    },[])
     return (
-      <authContext.Provider value={{signInWithGoogle, user}}>
+      <authContext.Provider value={{signInWithGoogle, user, handleSignOut}}>
       {children}
     </authContext.Provider>
     )
