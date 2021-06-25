@@ -2,6 +2,8 @@ import React, { useContext} from 'react';
 import { authContext } from '../../contexts/AuthContext';
 import { timerContext } from '../../contexts/TimerContext';
 
+import "./styles.scss"
+
 
 const Timer: React.FC = () => {
   const {time,handleStartTimer, handlePauseTimer, isTimeOn } = useContext(timerContext)
@@ -20,31 +22,33 @@ const Timer: React.FC = () => {
 
   }
   return (
-    <div className="timer">
-    <h2>Kampanos Clock</h2>
-    <div id="display">
-      <span>{hours}:</span>
-      <span>{minutes}:</span>
-      <span>{seconds}</span>
-    </div>
-    <div id="buttons">
-    {!user ? (
-          <button onClick={signIn}>sign In With Google</button>
-        ): (
-          <div>
-          {!isTimeOn && time === 0 && (
-          <button onClick={handleStartTimer}>Start</button>
-         )}
-          {isTimeOn && <button onClick={handlePauseTimer}>Stop</button>}
-        {!isTimeOn && time > 0 && (
-          <button onClick={handleStartTimer}>Restart</button>
-         )}
-          {/* {!isTimeOn && time > 0 && (
-          <button onClick={() => setIsTimeOn(true)}>Resume</button>
-        )} */}
-            </div>
-        )}
-    </div>
+    <div id="timer">
+      <div className="clock">
+        <h2>Kampanos Clock</h2>
+        <div className="display">
+          <span>{hours}:</span>
+          <span>{minutes}:</span>
+          <span>{seconds}</span>
+        </div>
+      </div>
+      <div className="buttons">
+      {!user ? (
+            <button onClick={signIn}>sign In With Google</button>
+          ): (
+            <div>
+            {!isTimeOn && time === 0 && (
+            <button onClick={handleStartTimer}>Start</button>
+          )}
+            {isTimeOn && <button onClick={handlePauseTimer}>Stop</button>}
+          {!isTimeOn && time > 0 && (
+            <button onClick={handleStartTimer}>Restart</button>
+          )}
+            {/* {!isTimeOn && time > 0 && (
+            <button onClick={() => setIsTimeOn(true)}>Resume</button>
+          )} */}
+              </div>
+          )}
+      </div>
   </div>
   );
 }

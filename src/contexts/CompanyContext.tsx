@@ -24,7 +24,7 @@ export function CompanyProvider({children} : CompanyProviderProps){
         const fetchData = async ()=>{
           const querySnapshot = await database.collection('Company').where("name", "==", "Kampanos").get()
           setCompany(querySnapshot)
-          console.log(company)
+          console.log(querySnapshot.docs)
         }
         fetchData();
     }

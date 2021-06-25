@@ -1,0 +1,78 @@
+#dashboard{
+  height:100vh;
+  display: grid;
+  grid-template-areas:
+   "ASIDE NAVBAR"
+   "ASIDE MAIN";
+  grid-template-columns: 162px auto;
+  grid-template-rows: 130px auto;
+
+
+  aside{
+    width: 100%;
+    height:100%;
+    grid-area: ASIDE;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    background: #c4c4c4;
+
+    img{
+      width: 108px;
+      height:70px;
+    }
+    div{
+      width: 80px;
+      height: 70px;
+      background: #878787;
+    }
+  }
+
+  nav{
+    grid-area: NAVBAR;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    div{
+      width: 142px;
+      height: 62px;
+      margin: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content:center;
+      background: #c4c4c4
+    }
+  }
+  main{
+    grid-area: MAIN;
+
+
+
+  }
+  .user-info{
+    width: 196px;
+    height:60px;
+    margin: 20px 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content:center;
+
+    background: #c4c4c4;
+  }
+
+  .grid{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 20px;
+    align-content: end;
+    padding: 0 5%;
+    
+
+    .timer{
+      width: 380px;
+      height: 460px;
+    }
+  }
+}
