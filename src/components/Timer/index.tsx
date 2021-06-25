@@ -20,8 +20,8 @@ const Timer: React.FC = () => {
 
   }
   return (
-    <div className="Timers">
-    <h2>Stopwatch</h2>
+    <div className="timer">
+    <h2>Kampanos Clock</h2>
     <div id="display">
       <span>{hours}:</span>
       <span>{minutes}:</span>

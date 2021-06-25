@@ -13,11 +13,6 @@ const TimeTable: React.FC = ({time}: any) => {
       
       {timestamps.map((item:any , index:any)=>( 
             <div className="container" key={index}>
-              {/* <h4>{JSON.stringify(item)}</h4> */}
-              <div>
-                <strong>ID : </strong>
-                {item.id}
-              </div>
               <div>
               <strong>Start Time : </strong>
                 {item.data.startTime}

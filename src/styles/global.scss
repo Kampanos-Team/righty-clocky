@@ -1,0 +1,31 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  background: #f8f8f8;
+  color: #29292e
+}
+
+body, input, button, textarea{
+  font: 400 16px 'Roboto', sans-serif;
+  
+}
+
+.timer {
+  width: 200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#display {
+  margin-bottom: 20px;
+}
+#display span {
+  font-size: 36px;
+}
+#buttons button:nth-child(2) {
+  margin-left: 8px;
+}
