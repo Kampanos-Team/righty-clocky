@@ -1,13 +1,13 @@
 import React, { useContext} from 'react';
-import { authContext } from '../../contexts/AuthContext';
 import { timerContext } from '../../contexts/TimerContext';
+import { useAuth } from '../../hooks/useAuth';
 
 import "./styles.scss"
 
 
 const Timer: React.FC = () => {
   const {time,handleStartTimer, handlePauseTimer, isTimeOn } = useContext(timerContext)
-  const {user, signInWithGoogle} = useContext(authContext)
+  const {user, signInWithGoogle} = useAuth()
  
   const minutes = ("0" + Math.floor((time / 60000) % 60)).slice(-2)
   const seconds = ("0" + Math.floor((time / 1000) % 60)).slice(-2)

@@ -2,7 +2,7 @@ import firebase from "firebase/app"
 
 //import all services that will be used in firebase app
 import "firebase/auth"
-import "firebase/firestore"
+import "firebase/database"
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 //values are temporary and must be moved to environment variables
@@ -20,6 +20,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 
 const auth = firebase.auth()
- const database = firebase.firestore()
+ const database = firebase.database()
 
 export {firebase, auth, database}

@@ -1,0 +1,20 @@
+{
+  "rules": {
+    "companies": {
+      ".read": false,
+      ".write": "auth != null",
+      "$companyId": {
+        ".read": true,
+        ".write": "auth != null && (!data.exists() || data.child('authorId').val() == auth.uid)",
+        "projects": {
+          ".read": true,
+          ".write": "auth != null && (!data.exists() || data.parent().child('authorId').val() == auth.uid)",
+          "tasks": {
+            ".read": true,
+            ".write": "auth != null && (!data.exists() || data.child('authorId').val() == auth.uid)"
+          }
+        }
+      }
+    }
+  }
+}

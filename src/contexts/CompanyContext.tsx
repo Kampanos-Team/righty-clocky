@@ -21,12 +21,12 @@ export function CompanyProvider({children} : CompanyProviderProps){
   const {user} = useContext(authContext)
 
     useEffect(() => {
-        const fetchData = async ()=>{
-          const querySnapshot = await database.collection('Company').where("name", "==", "Kampanos").get()
-          setCompany(querySnapshot)
-          console.log(querySnapshot.docs)
-        }
-        fetchData();
+        // const fetchData = async ()=>{
+        //   const querySnapshot = await database.collection('Company').where("name", "==", "Kampanos").get()
+        //   setCompany(querySnapshot)
+        //   console.log(querySnapshot.docs)
+        // }
+        // fetchData();
     }
     ,[])
     return (

@@ -5,12 +5,15 @@
 }
 
 body{
-  background: #f8f8f8;
+  background: #F1F2FF;
+
   color: #29292e
 }
 
 body, input, button, textarea{
-  font: 400 16px 'Roboto', sans-serif;
-  
+  font-family: 'Montserrat', sans-serif;
+}
+button{
+  cursor: pointer;
 }
 

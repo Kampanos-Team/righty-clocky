@@ -22,6 +22,7 @@ export function TimerProvider({children} : TimerProviderProps){
   const [endTime, setEndTime] = useState<number>(0)
   const [timestamps, setTimestamps] = useState<any>([])
   const {user, signInWithGoogle} = useContext(authContext)
+
   const handleStartTimer = () => {
     setIsTimeOn(true)
     setStartTime(Date.now())
@@ -35,15 +36,15 @@ export function TimerProvider({children} : TimerProviderProps){
   const writeTime = async () => {
     const e = Date.now()
     if(user){
-      await database.collection("timestamps").add({
-        startTime: new Date(startTime).toString(),
-        endTime:  new Date(e).toString(),
-        worker: user.name,
-        company: "Kampanos",
-        project: "project X",
-        Task: "task1",
-        totalHours: new Date(time).toISOString().substr(11, 8)
-      });  
+      // await database.collection("timestamps").add({
+      //   startTime: new Date(startTime).toString(),
+      //   endTime:  new Date(e).toString(),
+      //   worker: user.name,
+      //   company: "Kampanos",
+      //   project: "project X",
+      //   Task: "task1",
+      //   totalHours: new Date(time).toISOString().substr(11, 8)
+      // });  
     }
   };
   useEffect(() => {
@@ -58,14 +59,14 @@ export function TimerProvider({children} : TimerProviderProps){
      else if (!isTimeOn) {
       clearInterval(interval);
     }
-    if(!isTimeOn){
-      const fetchData = async ()=>{
-        const querySnapshot = await database.collection('timestamps').orderBy("endTime", "desc").get()
-        setTimestamps(querySnapshot.docs.map( (doc) =>  ( {id: doc.id, data: doc.data()})))
-        console.log(timestamps)
-      }
-      fetchData();
-    }
+    // if(!isTimeOn){
+    //   const fetchData = async ()=>{
+    //     const querySnapshot = await database.ref('timestamps').get()
+    //     setTimestamps(querySnapshot.docs.map( (doc) =>  ( {id: doc.id, data: doc.data()})))
+    //     console.log(timestamps)
+    //   }
+    //   fetchData();
+    // }
 
     return () => clearInterval(interval);
     

@@ -1,0 +1,50 @@
+{
+  "company": {
+    "id": "string",
+    "name": "string",
+    "owner": "string",
+    "timeStamps": [
+      {
+        "id": "string",
+        "startTime": "dateTime",
+        "endTime": "dateTime",
+        "user": "string"
+      }
+    ],
+    "projects": [
+      {
+        "id": "string",
+        "name": "string",
+        "tasks": [
+          {
+            "id": "string",
+            "name": "string",
+            "completed": "boolean",
+            "description": "string"
+          }
+        ]
+      }
+    ],
+    "members": [
+      {
+        "id": "string",
+        "name": "string",
+        "email": "string",
+        "avatarURL": "string",
+        "totalHours": "dateTime",
+        "IsAdmin": "boolean",
+        "isOwner": "boolean",
+        "isOnline": "boolean"
+      }
+    ],
+    "clients": [
+      {
+        "id": "string",
+        "name": "string",
+        "projects": {
+          "projectId": "string"
+        }
+      }
+    ]
+  }
+}
