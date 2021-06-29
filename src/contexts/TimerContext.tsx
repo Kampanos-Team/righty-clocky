@@ -30,23 +30,9 @@ export function TimerProvider({children} : TimerProviderProps){
   const handlePauseTimer = () => {
     setEndTime(Date.now())
     setIsTimeOn(false)
-    writeTime()
     
   }
-  const writeTime = async () => {
-    const e = Date.now()
-    if(user){
-      // await database.collection("timestamps").add({
-      //   startTime: new Date(startTime).toString(),
-      //   endTime:  new Date(e).toString(),
-      //   worker: user.name,
-      //   company: "Kampanos",
-      //   project: "project X",
-      //   Task: "task1",
-      //   totalHours: new Date(time).toISOString().substr(11, 8)
-      // });  
-    }
-  };
+
   useEffect(() => {
     let interval = null as any
     if (isTimeOn) {

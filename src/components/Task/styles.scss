@@ -1,0 +1,49 @@
+.task{
+  width: 315px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #F1F2FF;
+  box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
+  margin: 12px;
+  border-radius: 6px;
+  padding: 0 11px;
+
+  cursor: pointer;
+
+  transition: filter 0.2s;
+
+  &:hover{
+    filter: brightness(0.95)
+  }
+
+  div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+  }
+
+  button{
+    background: transparent;
+    border: none;
+    outline: none;
+
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%
+  }
+
+  p{
+    font-size: 12px;
+    color: #8A8A8A;
+
+    strong{
+      color: #5F4F87;
+    }
+  }
+}

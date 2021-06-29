@@ -1,4 +1,3 @@
-import { Home } from "./pages/Home";
 import { Dashboard } from "./pages/Dashboard";
 import "./styles/global.scss"
 import { Login } from "./pages/Login";

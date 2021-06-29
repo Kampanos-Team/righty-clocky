@@ -13,7 +13,7 @@ import { useHistory } from "react-router-dom"
 import { FormEvent, useState } from "react"
 
 export function Login(){
-  const { user, signInWithGoogle, signInWithEmailPassword, createUserWithEmailAndPassword} = useAuth()
+  const { user, signInWithGoogle, signInWithEmailPassword } = useAuth()
   const history = useHistory()
   const [emailInput, setEmailInput] = useState("")
   const [passwordInput, setPasswordInput] = useState("")

@@ -6,9 +6,15 @@ import avatar from "../assets/images/avatar.svg"
 import playImg from "../assets/images/play-icon.svg"
 import addTaskImg from "../assets/images/add-icon.svg"
 import "../styles/dashboard.scss"
-
+import TaskList from "../components/TaskList"
+import { useAuth } from '../hooks/useAuth';
 
 export function Dashboard(){
+  const {user} = useAuth()
+
+
+
+
   return (
     <div id="dashboard">
       <aside>
@@ -44,7 +50,7 @@ export function Dashboard(){
         <div className="grid">
           <div className="banner-left">
               <div>
-                <h1>Welcome back {"Username"}</h1>
+                <h1>Welcome back {"Username"},</h1>
                 <p>It's the perfect time to start working {":)"}</p>
               </div>
               <div>
@@ -69,12 +75,7 @@ export function Dashboard(){
                 <Timer/>
             </div>
             <div className="task-container">
-              <div>Task</div>
-              <div>Task</div>
-              <div>Task</div>
-              <div>Task</div>
-              <div>Task</div>
-              <div>Task</div>
+              <TaskList/>
             </div>
           </main>
     </div>
