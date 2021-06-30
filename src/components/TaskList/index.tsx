@@ -14,12 +14,8 @@ import { useTask } from '../../hooks/useTask';
 
 const TaskList = () => {
   const {user} = useAuth()
-  const {tasks, selectedTask, setSelectedTask, isEditTaskOpen, setIsEditTaskOpen, isNewTaskOpen, setIsNewTaskOpen, newTaskForm, setNewTaskForm } = useTask()
+  const {tasks, selectedTask, isEditTaskOpen, isNewTaskOpen, newTaskForm, setNewTaskForm, handleCloseForm, handleWriteNewTask } = useTask()
 
-  const handleWriteNewTask = () => {
-    setIsEditTaskOpen(undefined)
-    setIsNewTaskOpen(!isNewTaskOpen)
-  }
   const handleAddTask = async (event: FormEvent) => {
     event.preventDefault()
     if(!user){
@@ -29,19 +25,13 @@ const TaskList = () => {
       return
     }
     if(isNewTaskOpen){
-      const taskRef = await database.ref("companies/tasks").push({
+     await database.ref("companies/tasks").push({
         title: newTaskForm,
         authorId: user.id,
         isCompleted: false
       })
-      setNewTaskForm("")
-      setIsNewTaskOpen(false)
+      handleCloseForm()
     }
-  }
-  const handleCloseForm =  () => {
-    setNewTaskForm("")
-    setIsNewTaskOpen(false)
-    setIsEditTaskOpen(undefined)
   }
 
   const handleEditTask = async (event:FormEvent) =>{
