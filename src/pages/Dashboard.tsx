@@ -1,4 +1,3 @@
-import React from 'react';
 import Timer from "../components/Timer"
 import logo from "../assets/images/logo.svg"
 import clockImg from "../assets/images/clock-icon.svg"
@@ -11,8 +10,6 @@ import { useAuth } from '../hooks/useAuth';
 
 export function Dashboard(){
   const {user} = useAuth()
-
-
 
   return (
     <div id="dashboard">
