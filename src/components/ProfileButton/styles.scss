@@ -1,0 +1,56 @@
+.profile-button{
+  display: flex;
+  z-index: 1000;
+  position: relative;
+  flex-direction: column;
+  max-height: 44px;
+  width: 156px;
+  border-radius: 6px;
+
+  button{
+    background: #F1F2FF;
+    position: absolute;
+    width: 156px;
+    z-index: 1000;
+    font-size: 15px;
+
+    &:hover{
+    box-shadow: 4px 10px 29px 0px rgba(0,0,0,0.14);
+    }
+    .avatar{
+      height: 37px;
+      width: 37px;
+      border-radius: 50%;
+    }
+  
+    .expand-img{
+      height: 18px;
+      width: 18px;
+      transition: transform 0.2s;
+      transform: rotate(90deg);
+  
+      &.open{
+      transform: rotate(180deg);
+      }
+    }
+  }
+
+  .collapsible{
+    margin-top: 40px;
+    position: absolute;
+    z-index: 1;
+  }
+  .profile-dropdown{
+    width: 156px;
+    background: #FDFDFD;
+    height: 133px;
+    border-radius: 0 0 6px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 4px 10px 29px 0px rgba(0,0,0,0.14);
+
+  }
+
+}

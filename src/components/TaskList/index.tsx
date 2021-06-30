@@ -14,44 +14,23 @@ import { useTask } from '../../hooks/useTask';
 
 const TaskList = () => {
   const {user} = useAuth()
-  const {tasks, selectedTask, isEditTaskOpen, isNewTaskOpen, newTaskForm, setNewTaskForm, handleCloseForm, handleWriteNewTask } = useTask()
+  const {
+      tasks,
+      selectedTask,
+      isEditTaskOpen,
+      isNewTaskOpen, newTaskForm,
+      setNewTaskForm, 
+      handleCloseForm, 
+      handleWriteNewTask, 
+      handleAddTask, 
+      handleEditTask
+     } = useTask()
 
-  const handleAddTask = async (event: FormEvent) => {
-    event.preventDefault()
-    if(!user){
-      return;
-    }
-    if(newTaskForm.trim() === ""){
-      return
-    }
-    if(isNewTaskOpen){
-     await database.ref("companies/tasks").push({
-        title: newTaskForm,
-        authorId: user.id,
-        isCompleted: false
-      })
-      handleCloseForm()
-    }
-  }
-
-  const handleEditTask = async (event:FormEvent) =>{
-    event.preventDefault()
-    if(!user){
-      return;
-    }
-    if(newTaskForm.trim() === ""){
-      return
-    }
-      const taskRef = await database.ref(`companies/tasks/${isEditTaskOpen}`)
-      .update({
-        title: newTaskForm,
-        authorId: user.id,
-        isCompleted: false
-      })
-      handleCloseForm()
-  }
   return (
     <div className="task-list">
+      <div className="info">
+        <span>1. Select One Task</span>
+      </div>
       <button className="arrow-up">
         <img src={arrowImg} alt="arrow up" />
       </button>

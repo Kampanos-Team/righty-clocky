@@ -14,11 +14,43 @@ export function useTask(){
     setIsNewTaskOpen(false)
     setIsEditTaskOpen(undefined)
   }
-
-  
   const handleWriteNewTask = () => {
     setIsEditTaskOpen(undefined)
     setIsNewTaskOpen(!isNewTaskOpen)
+  }
+  const handleAddTask = async (event: FormEvent) => {
+    event.preventDefault()
+    if(!user){
+      return;
+    }
+    if(newTaskForm.trim() === ""){
+      return
+    }
+    if(isNewTaskOpen){
+     await database.ref("companies/tasks").push({
+        title: newTaskForm,
+        authorId: user.id,
+        isCompleted: false
+      })
+      handleCloseForm()
+    }
+  }
+
+  const handleEditTask = async (event:FormEvent) =>{
+    event.preventDefault()
+    if(!user){
+      return;
+    }
+    if(newTaskForm.trim() === ""){
+      return
+    }
+      const taskRef = await database.ref(`companies/tasks/${isEditTaskOpen}`)
+      .update({
+        title: newTaskForm,
+        authorId: user.id,
+        isCompleted: false
+      })
+      handleCloseForm()
   }
 
   return {
@@ -32,6 +64,8 @@ export function useTask(){
       newTaskForm,
       setNewTaskForm,
       handleCloseForm,
-      handleWriteNewTask
+      handleWriteNewTask,
+      handleAddTask,
+      handleEditTask
   }
 }

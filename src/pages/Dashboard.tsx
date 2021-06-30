@@ -9,12 +9,13 @@ import "../styles/dashboard.scss"
 import TaskList from "../components/TaskList"
 import { useAuth } from '../hooks/useAuth';
 import { useTask } from '../hooks/useTask';
+import ellipsisIcon from "../assets/images/ellipsis-icon.svg"
+import { useState } from 'react';
+import ProfileButton from '../components/ProfileButton';
 
 export function Dashboard(){
   const {user} = useAuth()
   const {handleWriteNewTask} = useTask()
-
-
   return (
     <div id="dashboard">
       <aside>
@@ -34,14 +35,11 @@ export function Dashboard(){
               <span>add task</span>
               </button>
             <button className="start-timer-button">
+      
               <img src={playImg} alt="play image" />
               <span>Start Time</span>
               </button>
-            <button className="profile-button">
-              <img src={avatar} alt="avatar" />
-              <span>Name</span>
-              <span>...</span>
-            </button>
+            <ProfileButton/>
         </div>
       </header>
       
@@ -58,10 +56,10 @@ export function Dashboard(){
                 <strong>8 Hours </strong>
                 left today
                 </span>
-                <span>
-                <strong>424 Hours </strong>
+                {/* <span> */}
+                {/* <strong>424 Hours </strong>
                 *Project X*
-                </span>
+                </span> */}
               </div>
           </div>
           {/* <div className="banner-right">
