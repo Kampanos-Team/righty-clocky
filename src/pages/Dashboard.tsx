@@ -14,7 +14,6 @@ export function Dashboard(){
 
 
 
-
   return (
     <div id="dashboard">
       <aside>
@@ -50,7 +49,7 @@ export function Dashboard(){
         <div className="grid">
           <div className="banner-left">
               <div>
-                <h1>Welcome back {"Username"},</h1>
+                <h1>Welcome back {user?.name},</h1>
                 <p>It's the perfect time to start working {":)"}</p>
               </div>
               <div>
@@ -64,19 +63,17 @@ export function Dashboard(){
                 </span>
               </div>
           </div>
-          <div className="banner-right">
+          {/* <div className="banner-right">
               <h2>424 Hours</h2>
               <p>*Project X*</p>
-          </div>
+          </div> */}
           </div>
           </div>
           <main>
-            <div className="timer-container">
-                <Timer/>
+            <div className="task-list-container">
+            <TaskList/>
             </div>
-            <div className="task-container">
-              <TaskList/>
-            </div>
+            <Timer/>
           </main>
     </div>
   )

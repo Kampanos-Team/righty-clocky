@@ -7,6 +7,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import playImg from "../../assets/images/play-button.svg"
 
 import "./styles.scss"
+import { database } from '../../services/firebase';
 
 
 const Timer: React.FC = () => {
@@ -31,6 +32,11 @@ const Timer: React.FC = () => {
     const e = Date.now()
     if(user){
       //write start time in database
+      const timestampRef = database.ref("companies/timestamps");
+      const newTimestamp = await timestampRef.push({
+        //data
+      })
+      console.log(newTimestamp)
     }
   };
 
@@ -47,7 +53,7 @@ const Timer: React.FC = () => {
       <CircularProgressbarWithChildren styles={{trail: {  strokeLinecap: 'butt'}, path:{strokeLinecap: 'butt'}}} className="progress-timer" strokeWidth={6} value={percentage}>
         <span>
         00: 00: 00
-        <img onClick={handleStartTimer} src={playImg} alt="" />
+        <img onClick={writeStartTime} src={playImg} alt="" />
         </span>
        
       </CircularProgressbarWithChildren>

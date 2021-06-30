@@ -30,7 +30,6 @@ export function TimerProvider({children} : TimerProviderProps){
   const handlePauseTimer = () => {
     setEndTime(Date.now())
     setIsTimeOn(false)
-    
   }
 
   useEffect(() => {
