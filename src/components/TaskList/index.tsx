@@ -38,7 +38,11 @@ const TaskList = () => {
       setIsNewTaskOpen(false)
     }
   }
-  console.log(newTaskForm)
+  const handleCloseForm =  () => {
+    setNewTaskForm("")
+    setIsNewTaskOpen(false)
+    setIsEditTaskOpen(undefined)
+  }
 
   const handleEditTask = async (event:FormEvent) =>{
     event.preventDefault()
@@ -54,9 +58,7 @@ const TaskList = () => {
         authorId: user.id,
         isCompleted: false
       })
-      setNewTaskForm("")
-      setIsNewTaskOpen(false)
-      setIsEditTaskOpen(undefined)
+      handleCloseForm()
   }
   return (
     <div className="task-list">
@@ -76,7 +78,9 @@ const TaskList = () => {
       ))}
          </div>
       <button className="arrow-down"> <img src={arrowImg} alt="arrow down" /></button>
-      <button onClick={handleWriteNewTask} className="add-task">add task</button>
+      {!isNewTaskOpen && !isEditTaskOpen && (
+        <button onClick={handleWriteNewTask} className="add-task">add task</button>
+      )}
       {isNewTaskOpen && !isEditTaskOpen && (
         <form onSubmit={(event) => handleAddTask(event)}>
         <div>
@@ -86,7 +90,7 @@ const TaskList = () => {
           value={newTaskForm}
           onChange={event => setNewTaskForm(event.target.value)}
             />
-          <span onClick={() => setNewTaskForm("")}>X</span>
+          <span onClick={handleCloseForm}>X</span>
         </div>
         <button type="submit" className={`${newTaskForm ? "display" : "hide"}`}>
           <img src={playIcon} alt="add task" />
@@ -102,7 +106,7 @@ const TaskList = () => {
           value={newTaskForm}
           onChange={event => setNewTaskForm(event.target.value)}
             />
-          <span onClick={() => setNewTaskForm("")}>X</span>
+          <span onClick={handleCloseForm}>X</span>
         </div>
         <button type="submit" className={`${newTaskForm ? "display" : "hide"}`}>
           <img src={playIcon} alt="add task" />
