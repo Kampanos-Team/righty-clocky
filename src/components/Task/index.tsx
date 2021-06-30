@@ -1,4 +1,4 @@
-import React, { useContext} from 'react';
+import  { useContext} from 'react';
 import { useState } from 'react';
 import { timerContext } from '../../contexts/TimerContext';
 import { useAuth } from '../../hooks/useAuth';
@@ -44,7 +44,6 @@ const Task = ({isActive = false, title , taskNumber , taskId, isCompleted}: Task
     }
   }
 
-  const percentage = 30;
   return (
           
     <div className="task">
@@ -89,8 +88,6 @@ const Task = ({isActive = false, title , taskNumber , taskId, isCompleted}: Task
            </div>
         )}
       />
-    
-      {/* </Collapse> */}
     </div>
   );
 }
