@@ -3,6 +3,7 @@ import {useContext, useState} from "react"
 import { taskContext } from '../contexts/TaskContext';
 import { database } from "../services/firebase";
 import { useAuth } from "./useAuth";
+import toast from 'react-hot-toast';
 
 
 export function useTask(){
@@ -32,7 +33,27 @@ export function useTask(){
         authorId: user.id,
         isCompleted: false
       })
+  
       handleCloseForm()
+      toast.success("Task added",{
+        duration: 4000,
+        position: 'bottom-center',
+        // Styling
+        style: {},
+        className: '',
+        // Custom Icon
+        // icon: '👏',
+        // Change colors of success/error/loading icon
+        // iconTheme: {
+        //   primary: '#000',
+        //   secondary: '#fff',
+        // },
+        // Aria
+        ariaProps: {
+          role: 'status',
+          'aria-live': 'polite',
+        },
+      })
     }
   }
 

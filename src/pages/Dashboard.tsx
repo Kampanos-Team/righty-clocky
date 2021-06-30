@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Timer from "../components/Timer"
 import logo from "../assets/images/logo.svg"
 import clockImg from "../assets/images/clock-icon.svg"
@@ -12,12 +12,25 @@ import { useTask } from '../hooks/useTask';
 import ellipsisIcon from "../assets/images/ellipsis-icon.svg"
 import { useState } from 'react';
 import ProfileButton from '../components/ProfileButton';
+import toast, { Toaster } from 'react-hot-toast';
 
 export function Dashboard(){
   const {user} = useAuth()
   const {handleWriteNewTask} = useTask()
+
+  useEffect(() => {
+    if(user){
+      if(user?.name){
+        toast(`Welcome ${user?.name}`)
+      }else{
+        toast(`Welcome`)
+      } 
+    }
+
+  },[user])
   return (
     <div id="dashboard">
+          <div><Toaster/></div>
       <aside>
         <img src={logo} alt="logo" />
         <div className="aside-buttons">

@@ -1,4 +1,3 @@
-import React, { FormEvent, useContext, useEffect} from 'react';
 import Task from "../Task"
 
 import arrowImg from "../../assets/images/arrow.svg"
@@ -6,8 +5,6 @@ import playIcon from "../../assets/images/play-icon.svg"
 
 import "./styles.scss"
 import { useAuth } from '../../hooks/useAuth';
-import { database } from '../../services/firebase';
-import { useState } from 'react';
 import { useTask } from '../../hooks/useTask';
 
 
