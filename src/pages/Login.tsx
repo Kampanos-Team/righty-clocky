@@ -1,5 +1,4 @@
-import Timer from "../components/Timer"
-import TimeTable from "../components/TimeTable"
+
 import { useAuth } from "../hooks/useAuth"
 import Profile from "../Profile"
 import heroImg from "../assets/images/hero-login.svg"

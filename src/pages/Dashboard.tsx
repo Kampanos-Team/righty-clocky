@@ -8,10 +8,11 @@ import addTaskImg from "../assets/images/add-icon.svg"
 import "../styles/dashboard.scss"
 import TaskList from "../components/TaskList"
 import { useAuth } from '../hooks/useAuth';
+import { useTask } from '../hooks/useTask';
 
 export function Dashboard(){
   const {user} = useAuth()
-
+  const {handleWriteNewTask} = useTask()
 
 
   return (
@@ -28,7 +29,7 @@ export function Dashboard(){
       </aside>
       <header>
         <div>
-            <button className="add-task-button">
+            <button onClick={handleWriteNewTask} className="add-task-button">
               <img src={addTaskImg} alt="" />
               <span>add task</span>
               </button>
