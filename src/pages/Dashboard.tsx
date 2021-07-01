@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 import React, { useEffect } from 'react';
->>>>>>> 623ef6828751377f23569aafd2beb5573c348fa5
 import Timer from "../components/Timer"
 import logo from "../assets/images/logo.svg"
 import clockImg from "../assets/images/clock-icon.svg"
@@ -19,13 +16,9 @@ import toast, { Toaster } from 'react-hot-toast';
 
 export function Dashboard(){
   const {user} = useAuth()
-<<<<<<< HEAD
-=======
   const {handleWriteNewTask} = useTask()
 
-<<<<<<< HEAD
->>>>>>> 7ce17c24b9b884fd79b5e50d076a8b988e75914a
-=======
+
   useEffect(() => {
     if(user){
       if(user?.name){
@@ -34,7 +27,6 @@ export function Dashboard(){
         toast(`Welcome`)
       } 
     }
->>>>>>> 623ef6828751377f23569aafd2beb5573c348fa5
 
   },[user])
   return (
