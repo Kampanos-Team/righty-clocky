@@ -7,7 +7,7 @@
    "ASIDE BANNER"
    "ASIDE TIMER";
   grid-template-columns: 117px auto;
-  grid-template-rows: 80px 130px auto;
+  grid-template-rows: 80px 150px auto;
 
 
   aside{
@@ -52,13 +52,13 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    div{
+    >div{
       width: 50%;
       display: flex;
       justify-content: space-around;
 
       button{
-        width: 148px;
+        width: 156px;
         resize: none;
         height: 42px;
         display: flex;
@@ -67,7 +67,6 @@
         border-radius: 6px;
         font-size: 16px;
         font-weight: 600;
-        padding: 0 5px;
         outline: 0;
         border: 0;
       }
@@ -81,27 +80,10 @@
         background: #806AB6;
         color: #fff;
       }
-      .profile-button{
-        background: transparent;
-        img{
-          height: 40px;
-          width: 40px;
-        }
-      }
-      div{
-        width: 142px;
-        height: 62px;
-        margin: 0 18px;
-        display: flex;
-        align-items: center;
-        justify-content:center;
-        background: #c4c4c4
-      }
     }
   }
   .banner{
     grid-area: BANNER;
-
 
     .separator{
       width: 90%;
@@ -119,7 +101,7 @@
       grid-template-columns: 1fr 1fr;
 
       div div+div{
-        margin-top: 20px;
+        margin-top: 10px;
       }
       
       h1{
@@ -168,8 +150,9 @@
       grid-area: TIMER;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      padding: 40px 46px;
+      padding: 0 46px;
       align-items: center;
+      gap: 6px;
 
       .task-list-container{
         width: 100%;

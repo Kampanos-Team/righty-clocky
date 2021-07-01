@@ -11,6 +11,7 @@ import checkImg from "../../assets/images/check.svg"
 import "./styles.scss"
 import { useTask } from '../../hooks/useTask';
 import { database } from '../../services/firebase';
+import toast from 'react-hot-toast';
 
 type TaskProps = {
   isActive: boolean,
@@ -42,6 +43,25 @@ const Task = ({isActive = false, title , taskNumber , taskId, isCompleted}: Task
     if(window.confirm("Are you sure you want to delete this task?")){
       await database.ref(`companies/tasks/${taskId}`).remove()
     }
+    toast("Task Deleted",{
+      duration: 4000,
+      position: 'bottom-center',
+      // Styling
+      style: {},
+      className: '',
+      // Custom Icon
+      icon: '🗑️',
+      // Change colors of success/error/loading icon
+      iconTheme: {
+        primary: '#000',
+        secondary: '#fff',
+      },
+      // Aria
+      ariaProps: {
+        role: 'status',
+        'aria-live': 'polite',
+      },
+    })
   }
 
   return (
