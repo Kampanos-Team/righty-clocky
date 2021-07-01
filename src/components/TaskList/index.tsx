@@ -1,4 +1,6 @@
 import Task from "../Task"
+// import * as Scroll from 'react-scroll'
+// import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 import arrowImg from "../../assets/images/arrow.svg"
 import playIcon from "../../assets/images/play-icon.svg"
@@ -6,8 +8,6 @@ import playIcon from "../../assets/images/play-icon.svg"
 import "./styles.scss"
 import { useAuth } from '../../hooks/useAuth';
 import { useTask } from '../../hooks/useTask';
-
-
 
 const TaskList = () => {
   const {user} = useAuth()
@@ -43,7 +43,11 @@ const TaskList = () => {
           />
       ))}
          </div>
-      <button className="arrow-down"> <img src={arrowImg} alt="arrow down" /></button>
+        <button
+ 
+        className="arrow-down">
+          <img src={arrowImg} alt="arrow down"/>
+        </button>
       {!isNewTaskOpen && !isEditTaskOpen && (
         <button onClick={handleWriteNewTask} className="add-task">add task</button>
       )}
@@ -51,6 +55,7 @@ const TaskList = () => {
         <form onSubmit={(event) => handleAddTask(event)}>
         <div>
           <input
+          autoFocus
           type="text"
           placeholder="write your task here :)"
           value={newTaskForm}
@@ -67,6 +72,7 @@ const TaskList = () => {
         <form onSubmit={(event) => handleEditTask(event)}>
         <div>
           <input
+          autoFocus
           type="text"
           placeholder="write your task here :)"
           value={newTaskForm}
@@ -79,7 +85,6 @@ const TaskList = () => {
         </button>
         </form>
       )}
-      
     </div>
   );
 }

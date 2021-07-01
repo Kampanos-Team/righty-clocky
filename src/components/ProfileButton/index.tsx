@@ -7,29 +7,20 @@ import "./styles.scss"
 import { useTask } from '../../hooks/useTask';
 import ellipsisIcon from "../../assets/images/ellipsis-icon.svg"
 
-type TaskProps = {
-  isActive: boolean,
-  title: string,
-  taskNumber: number
-  taskId: string
-  isCompleted: boolean
-}
-
 const ProfileButton = () => {
   const {user} = useAuth()
-  const {handleWriteNewTask} = useTask()
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false)
 
   return (
-    <div className="profile-button">
-    <button >
+    <div className="profile-button" >
+    <button className={`${isProfileOpen && "active"}`} onClick={() => setIsProfileOpen(!isProfileOpen)}>
     {user?.avatar ? (
         <img className="avatar" src={user?.avatar} alt="avatar" />
       ):(
         <img src={avatar} alt="avatar" />
       )}
       <span>name</span>
-      <img onClick={() => setIsProfileOpen(!isProfileOpen)} className={`expand-img ${isProfileOpen && "open"}`} src={ellipsisIcon} alt="more" />
+      <img className={`expand-img ${isProfileOpen && "open"}`} src={ellipsisIcon} alt="more" />
     </button>
     <Collapse
       isOpen={isProfileOpen}
@@ -38,9 +29,15 @@ const ProfileButton = () => {
       aria-hidden={isProfileOpen ? "false" : "true"}
       render={collapseState => (
         <div className="profile-dropdown">
-          <div>working</div>
-          <div>export data</div>
-          <div>sign out</div>
+          <div className="selector">
+          <label className="switch">
+            <input type="checkbox"/>
+              <span className="slider round"></span>
+          </label>
+            <span>Working</span>
+          </div>
+          <div>Export data</div>
+          <div>Sign Out</div>
         </div>
       )}
     />
