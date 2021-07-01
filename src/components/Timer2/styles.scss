@@ -1,7 +1,7 @@
 #timer{
   width: 300px;
   height: 300px;
-  // margin: 0 auto;
+  margin: 0 auto;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -22,8 +22,6 @@
 
     img{
       margin-top: 8px;
-      width: 53px;
-      height: 53px;
       cursor: pointer;
     }
   }
@@ -75,3 +73,4 @@
   }
 }
      
+

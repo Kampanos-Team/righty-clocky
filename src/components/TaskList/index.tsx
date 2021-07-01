@@ -20,13 +20,14 @@ const TaskList = () => {
       handleCloseForm, 
       handleWriteNewTask, 
       handleAddTask, 
-      handleEditTask
+      handleEditTask,
+      taskNotSelectedError
      } = useTask()
 
   return (
     <div className="task-list">
       <div className="info">
-        <span>1. Select One Task</span>
+        <span className={`${taskNotSelectedError && "error"}`}>1. Select One Task</span>
       </div>
       <button className="arrow-up">
         <img src={arrowImg} alt="arrow up" />
@@ -40,6 +41,7 @@ const TaskList = () => {
           isCompleted = {task.isCompleted}
           title={task.title}
           taskNumber={index}
+          isInProgress ={task.isInProgress}
           />
       ))}
          </div>
