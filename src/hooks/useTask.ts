@@ -8,7 +8,19 @@ import toast from 'react-hot-toast';
 
 export function useTask(){
   const {user} = useAuth()
-  const {tasks, selectedTask, setSelectedTask, isEditTaskOpen, setIsEditTaskOpen, isNewTaskOpen, setIsNewTaskOpen,  newTaskForm, setNewTaskForm} = useContext(taskContext)
+  const {
+    tasks,
+    selectedTask,
+    setSelectedTask,
+    isEditTaskOpen, 
+    setIsEditTaskOpen, 
+    isNewTaskOpen,
+    setIsNewTaskOpen,  
+    newTaskForm,
+    setNewTaskForm, 
+    taskNotSelectedError,
+    setTaskNotSelectedError
+  } = useContext(taskContext)
   
   const handleCloseForm =  () => {
     setNewTaskForm("")
@@ -31,7 +43,8 @@ export function useTask(){
      await database.ref("companies/tasks").push({
         title: newTaskForm,
         authorId: user.id,
-        isCompleted: false
+        isCompleted: false,
+        isInProgress: false
       })
   
       handleCloseForm()
@@ -74,6 +87,16 @@ export function useTask(){
       handleCloseForm()
   }
 
+  const handleCompleteTask = async () =>{
+    if(!user){
+      return;
+    }
+    const taskRef = await database.ref(`companies/tasks/${isEditTaskOpen}`)
+    .update({
+      isCompleted: true
+    })
+  }
+
   return {
       tasks,
       selectedTask,
@@ -87,6 +110,8 @@ export function useTask(){
       handleCloseForm,
       handleWriteNewTask,
       handleAddTask,
-      handleEditTask
+      handleEditTask,
+      taskNotSelectedError,
+      setTaskNotSelectedError,
   }
 }

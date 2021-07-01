@@ -12,6 +12,8 @@ interface TaskContextData{
   setIsNewTaskOpen: React.Dispatch<React.SetStateAction<boolean>>
   newTaskForm: string
   setNewTaskForm: React.Dispatch<React.SetStateAction<string>>
+  taskNotSelectedError: boolean
+  setTaskNotSelectedError: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 type FirebaseTasks = Record<string, Task>
@@ -24,6 +26,7 @@ type Task = {
   title: string
   isCompleted: boolean
   inProgress: string
+  isInProgress: boolean
 }
 
 export const taskContext = createContext({} as TaskContextData);
@@ -34,6 +37,8 @@ export function TaskProvider({children} : TaskProviderProps){
   const [isEditTaskOpen, setIsEditTaskOpen] = useState<string | undefined>()
   const [isNewTaskOpen, setIsNewTaskOpen] = useState<boolean>(false)
   const [newTaskForm, setNewTaskForm] = useState<string>("")
+  const [taskNotSelectedError, setTaskNotSelectedError] = useState<boolean>(false)
+
 
      // fetch task data
   useEffect(() => {
@@ -48,7 +53,8 @@ export function TaskProvider({children} : TaskProviderProps){
           authorId: value.authorId,
           isCompleted: value.isCompleted,
           title: value.title,
-          inProgress: value.inProgress
+          inProgress: value.inProgress,
+          isInProgress: value.isInProgress
         }
     })
       setTasks(parsedTasks)
@@ -72,7 +78,7 @@ export function TaskProvider({children} : TaskProviderProps){
   }
 
   return(
-    <taskContext.Provider value={{tasks, selectedTask, setSelectedTask, isEditTaskOpen, setIsEditTaskOpen, isNewTaskOpen, setIsNewTaskOpen, newTaskForm, setNewTaskForm}}>
+    <taskContext.Provider value={{tasks, taskNotSelectedError, setTaskNotSelectedError, selectedTask, setSelectedTask, isEditTaskOpen, setIsEditTaskOpen, isNewTaskOpen, setIsNewTaskOpen, newTaskForm, setNewTaskForm}}>
       {children}
     </taskContext.Provider>
   )

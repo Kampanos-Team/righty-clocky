@@ -3,7 +3,7 @@ import { timerContext } from '../contexts/TimerContext';
 
 
 export function useTimer(){
-  const {time,handleStartTimer, handlePauseTimer, isTimeOn } = useContext(timerContext)
+  const {time,writeStartTime, writeEndTime, isTimerOn, setIsTimerOn, formattedTime, timePercentage } = useContext(timerContext)
 
-  return {time,handleStartTimer, handlePauseTimer, isTimeOn }
+  return {time,writeStartTime, writeEndTime, isTimerOn, setIsTimerOn, formattedTime, timePercentage}
 }

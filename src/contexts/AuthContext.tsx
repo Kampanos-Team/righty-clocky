@@ -91,6 +91,7 @@ export function AuthProvider({children} : AuthProviderProps){
             throw new Error("Missing information")
           }
           setUser({id:uid, name:displayName, avatar: photoURL})
+
         }
       })
       return () => {

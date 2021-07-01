@@ -3,6 +3,7 @@ import "./styles/global.scss"
 import { Login } from "./pages/Login";
 import {BrowserRouter, Route, Switch} from "react-router-dom"
 import { MyComponent } from "./components/Collapsible";
+import Stopwatch from "./components/Timer2/Stopwatch";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
     </Switch>
   </BrowserRouter>
   // <MyComponent/>
+  // <Stopwatch/>
   );
 }
 
