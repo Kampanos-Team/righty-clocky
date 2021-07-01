@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Timer from "../components/Timer"
 import logo from "../assets/images/logo.svg"
 import clockImg from "../assets/images/clock-icon.svg"
@@ -9,14 +9,28 @@ import "../styles/dashboard.scss"
 import TaskList from "../components/TaskList"
 import { useAuth } from '../hooks/useAuth';
 import { useTask } from '../hooks/useTask';
+import ellipsisIcon from "../assets/images/ellipsis-icon.svg"
+import { useState } from 'react';
+import ProfileButton from '../components/ProfileButton';
+import toast, { Toaster } from 'react-hot-toast';
 
 export function Dashboard(){
   const {user} = useAuth()
   const {handleWriteNewTask} = useTask()
 
+  useEffect(() => {
+    if(user){
+      if(user?.name){
+        toast(`Welcome ${user?.name}`)
+      }else{
+        toast(`Welcome`)
+      } 
+    }
 
+  },[user])
   return (
     <div id="dashboard">
+          <div><Toaster/></div>
       <aside>
         <img src={logo} alt="logo" />
         <div className="aside-buttons">
@@ -34,14 +48,11 @@ export function Dashboard(){
               <span>add task</span>
               </button>
             <button className="start-timer-button">
+      
               <img src={playImg} alt="play image" />
               <span>Start Time</span>
               </button>
-            <button className="profile-button">
-              <img src={avatar} alt="avatar" />
-              <span>Name</span>
-              <span>...</span>
-            </button>
+            <ProfileButton/>
         </div>
       </header>
       
@@ -58,10 +69,10 @@ export function Dashboard(){
                 <strong>8 Hours </strong>
                 left today
                 </span>
-                <span>
-                <strong>424 Hours </strong>
+                {/* <span> */}
+                {/* <strong>424 Hours </strong>
                 *Project X*
-                </span>
+                </span> */}
               </div>
           </div>
           {/* <div className="banner-right">
