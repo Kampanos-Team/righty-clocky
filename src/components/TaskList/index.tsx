@@ -4,10 +4,13 @@ import Task from "../Task"
 
 import arrowImg from "../../assets/images/arrow.svg"
 import playIcon from "../../assets/images/play-icon.svg"
+import Select from 'react-select';
 
 import "./styles.scss"
 import { useAuth } from '../../hooks/useAuth';
 import { useTask } from '../../hooks/useTask';
+import { useState } from "react";
+import { useEffect } from "react";
 
 const TaskList = () => {
   const {user} = useAuth()
@@ -18,11 +21,20 @@ const TaskList = () => {
       isNewTaskOpen, newTaskForm,
       setNewTaskForm, 
       handleCloseForm, 
-      handleWriteNewTask, 
+      handleOpenNewTaskForm, 
       handleAddTask, 
       handleEditTask,
-      taskNotSelectedError
+      taskNotSelectedError,
+      projects,
+      setSelectedProjectName,
+      selectedProjectName
      } = useTask()
+    const [value, setValue] = useState<any>()
+    const handleFormSelector = (event: any) => {
+      const parsedSelection = JSON.parse(event.target.value)
+      console.log(parsedSelection.name)
+      setSelectedProjectName(parsedSelection.name)
+    }
 
   return (
     <div className="task-list">
@@ -40,8 +52,9 @@ const TaskList = () => {
           isActive = {task.id === selectedTask}
           isCompleted = {task.isCompleted}
           title={task.title}
-          taskNumber={index}
+          taskNumber={task.tag}
           isInProgress ={task.isInProgress}
+          projectName={task.projectName}
           />
       ))}
          </div>
@@ -51,11 +64,19 @@ const TaskList = () => {
           <img src={arrowImg} alt="arrow down"/>
         </button>
       {!isNewTaskOpen && !isEditTaskOpen && (
-        <button onClick={handleWriteNewTask} className="add-task">add task</button>
+        <button onClick={handleOpenNewTaskForm} className="add-task">add task</button>
       )}
       {isNewTaskOpen && !isEditTaskOpen && (
         <form onSubmit={(event) => handleAddTask(event)}>
         <div>
+        <select value={selectedProjectName} onChange={(event) => setSelectedProjectName(event.target.value)}>
+            {projects.map((project => (
+              <option key={project.id} value={project.name}>
+              #{project.tag}
+              </option>
+            ))) 
+            }
+          </select>
           <input
           autoFocus
           type="text"
@@ -73,6 +94,18 @@ const TaskList = () => {
       {!isNewTaskOpen && isEditTaskOpen && (
         <form onSubmit={(event) => handleEditTask(event)}>
         <div>
+          <select value={selectedProjectName} onChange={(event) => setSelectedProjectName(event.target.value)} >
+          {projects.map((project => {
+            return(
+              <option  key={project.id} value={project.name}>
+              #{project.tag}
+              </option>
+            )
+            }
+          )) 
+          }
+        </select>
+
           <input
           autoFocus
           type="text"

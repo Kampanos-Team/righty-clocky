@@ -2,10 +2,18 @@ import { Dashboard } from "./pages/Dashboard";
 import "./styles/global.scss"
 import { Login } from "./pages/Login";
 import {BrowserRouter, Route, Switch} from "react-router-dom"
-import { MyComponent } from "./components/Collapsible";
-import Stopwatch from "./components/Timer2/Stopwatch";
+import { useEffect } from "react";
+import { database } from "./services/firebase";
 
 function App() {
+
+  // const add = async () => {
+  //   await database.ref(`companies/projects`).push({
+  //     name: "Dewboard",
+  //     tag: "DEW",
+  //     totalHours: "X"
+  //   })
+  // }
 
   return (
     <BrowserRouter>
@@ -16,8 +24,7 @@ function App() {
       <Route path="/admin/rooms/:id" component={AdminRoom}/> */}
     </Switch>
   </BrowserRouter>
-  // <MyComponent/>
-  // <Stopwatch/>
+  // <button onClick={add}>add</button>
   );
 }
 

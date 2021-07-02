@@ -19,19 +19,28 @@ export function useTask(){
     newTaskForm,
     setNewTaskForm, 
     taskNotSelectedError,
-    setTaskNotSelectedError
+    setTaskNotSelectedError,
+    projects,
+    selectedProjectName,
+    setSelectedProjectName
   } = useContext(taskContext)
+
   
   const handleCloseForm =  () => {
     setNewTaskForm("")
     setIsNewTaskOpen(false)
     setIsEditTaskOpen(undefined)
   }
-  const handleWriteNewTask = () => {
+  const handleOpenNewTaskForm = () => {
     setIsEditTaskOpen(undefined)
     setIsNewTaskOpen(!isNewTaskOpen)
   }
   const handleAddTask = async (event: FormEvent) => {
+    let tag = ""
+    projects.forEach((project) =>{
+      if(project.name === selectedProjectName) tag = project.tag
+    })
+
     event.preventDefault()
     if(!user){
       return;
@@ -40,8 +49,10 @@ export function useTask(){
       return
     }
     if(isNewTaskOpen){
-     await database.ref("companies/tasks").push({
+     await database.ref(`companies/tasks`).push({
         title: newTaskForm,
+        projectName: selectedProjectName,
+        projectTag: tag,
         authorId: user.id,
         isCompleted: false,
         isInProgress: false
@@ -72,6 +83,10 @@ export function useTask(){
 
   const handleEditTask = async (event:FormEvent) =>{
     event.preventDefault()
+    let tag = ""
+    projects.forEach((project) =>{
+      if(project.name === selectedProjectName) tag = project.tag
+    })
     if(!user){
       return;
     }
@@ -82,7 +97,9 @@ export function useTask(){
       .update({
         title: newTaskForm,
         authorId: user.id,
-        isCompleted: false
+        isCompleted: false,
+        projectName: selectedProjectName,
+        projectTag: tag
       })
       handleCloseForm()
   }
@@ -97,6 +114,21 @@ export function useTask(){
     })
   }
 
+  const handleSetTaskProgress = async () => {
+    if(!user){
+      return;
+    }
+    if(newTaskForm.trim() === ""){
+      return
+    }
+      const taskRef = await database.ref(`companies/tasks/${isEditTaskOpen}`)
+      .update({
+        title: newTaskForm,
+        authorId: user.id,
+        isCompleted: false
+      })
+  }
+
   return {
       tasks,
       selectedTask,
@@ -108,10 +140,13 @@ export function useTask(){
       newTaskForm,
       setNewTaskForm,
       handleCloseForm,
-      handleWriteNewTask,
+      handleOpenNewTaskForm,
       handleAddTask,
       handleEditTask,
       taskNotSelectedError,
       setTaskNotSelectedError,
+      projects,
+      setSelectedProjectName,
+      selectedProjectName
   }
 }

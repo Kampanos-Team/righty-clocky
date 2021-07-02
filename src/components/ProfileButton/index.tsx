@@ -6,20 +6,30 @@ import avatar from "../../assets/images/avatar.svg"
 import "./styles.scss"
 import { useTask } from '../../hooks/useTask';
 import ellipsisIcon from "../../assets/images/ellipsis-icon.svg"
+import { useHistory } from 'react-router-dom';
 
 const ProfileButton = () => {
-  const {user} = useAuth()
+  const history = useHistory()
+
+  const {user, handleSignOut} = useAuth()
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false)
+
+  const signOut = async () => {
+    handleSignOut()
+    history.push("/")
+  }
 
   return (
     <div className="profile-button" >
     <button className={`${isProfileOpen && "active"}`} onClick={() => setIsProfileOpen(!isProfileOpen)}>
     {user?.avatar ? (
-        <img className="avatar" src={user?.avatar} alt="avatar" />
+        <img className="avatar" src={avatar} alt="avatar" />
       ):(
-        <img src={avatar} alt="avatar" />
+        <img className="avatar" src={avatar} alt="avatar" />
       )}
-      <span>name</span>
+      <span>
+        {user?.name ? user?.name.split(" ")[0] : "Profile"}
+      </span>
       <img className={`expand-img ${isProfileOpen && "open"}`} src={ellipsisIcon} alt="more" />
     </button>
     <Collapse
@@ -37,7 +47,7 @@ const ProfileButton = () => {
             <span>Working</span>
           </div>
           <div>Export data</div>
-          <div>Sign Out</div>
+          <div onClick={signOut}>Sign Out</div>
         </div>
       )}
     />

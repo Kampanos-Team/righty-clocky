@@ -17,7 +17,6 @@ import { useTimer } from '../../hooks/useTimer';
 
 const Timer: React.FC = () => {
   const {user, signInWithGoogle} = useAuth()
-  const {selectedTask, setTaskNotSelectedError} = useTask()
   const {isTimerOn, setIsTimerOn, writeStartTime, writeEndTime, formattedTime, timePercentage } = useTimer()
 
   //convert milliseconds to minutes, seconds, hours formula
@@ -26,16 +25,17 @@ const Timer: React.FC = () => {
   // const hours = `0${Math.floor(time / (1000 * 60 * 60)) % 24}`.slice(-2)
   // const timer = new Date(time).toISOString().substr(11, 8);
   // console.log(new Date("2021 09:27:23 GMT+0100 (Western European Standard Time)").getTime())
-  
-  const handleTimeCounter = () => {
-    //logica do timer
-  }
-
 
   return (
     <div id="timer" style={{ width: 320, height: 320 }}>
-      <CircularProgressbarWithChildren styles={{trail: {  strokeLinecap: 'butt'}, path:{strokeLinecap: 'butt', transition: 'stroke-dashoffset 0.1s ease 0s'}}}
-       className="progress-timer" strokeWidth={6} value={timePercentage}>
+      <CircularProgressbarWithChildren
+       styles={{trail: {  strokeLinecap: 'butt'}, path:{strokeLinecap: 'butt', transition: 'stroke-dashoffset 0.1s ease 0s'}}}
+       className="progress-timer"
+       strokeWidth={6}
+       value={timePercentage}
+       maxValue={60}
+       >
+        
         <span>
         {formattedTime ? formattedTime : "00:00:00"}
         {!isTimerOn ? (

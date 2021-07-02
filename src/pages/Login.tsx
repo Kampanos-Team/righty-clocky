@@ -1,6 +1,5 @@
 
 import { useAuth } from "../hooks/useAuth"
-import Profile from "../Profile"
 import heroImg from "../assets/images/hero-login.svg"
 import facebookImg from "../assets/images/facebook-icon.svg"
 import twitterImg from "../assets/images/twitter-icon.svg"

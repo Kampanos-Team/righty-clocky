@@ -21,13 +21,15 @@ type TaskProps = {
   taskId: string
   isCompleted: boolean
   isInProgress: boolean
+  projectName : string
+  projectTag?: string
 }
 
-const Task = ({isActive = false, title , taskNumber , taskId, isCompleted, isInProgress}: TaskProps) => {
+const Task = ({isActive = false, title , taskNumber , taskId, isCompleted, isInProgress , projectName, projectTag}: TaskProps) => {
   const {isTimerOn, setIsTimerOn, writeEndTime} = useTimer()
   const {user, signInWithGoogle} = useAuth()
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false)
-  const {setSelectedTask, selectedTask, isEditTaskOpen, setIsEditTaskOpen, setIsNewTaskOpen, newTaskForm, setNewTaskForm } = useTask()
+  const {setSelectedTask, setIsEditTaskOpen, setIsNewTaskOpen, setNewTaskForm, taskNotSelectedError, setSelectedProjectName } = useTask()
 
   const handleCompleteTask = async () =>{
     if(window.confirm("Complete this task?")){
@@ -36,10 +38,12 @@ const Task = ({isActive = false, title , taskNumber , taskId, isCompleted, isInP
       })
     }
   }
-  const handleEditTask = () => {
+  const handleOpenEditForm = () => {
     setNewTaskForm(title)
     setIsEditTaskOpen(taskId)
     setIsNewTaskOpen(false)
+    setSelectedProjectName(projectName)
+    console.log(projectName)
   }
   const handleDeleteTask = async () => {
     if(isInProgress){
@@ -98,7 +102,7 @@ const Task = ({isActive = false, title , taskNumber , taskId, isCompleted, isInP
   return (
           
     <div className="task">
-        <div className={`task-card ${isInProgress && "inProgress"}`}>
+        <div className={`task-card ${isInProgress && "inProgress"} ${taskNotSelectedError && "error"}`}>
             <button onClick={() => setIsDropdownOpen(!isDropdownOpen)}>...</button>
           <div onClick={handleSelectTask}>
             <p><strong>Task #{taskNumber}</strong> - {title}</p>
@@ -122,7 +126,7 @@ const Task = ({isActive = false, title , taskNumber , taskId, isCompleted, isInP
                     done</span>
                 </button>
 
-                <button onClick={handleEditTask}>
+                <button onClick={handleOpenEditForm}>
                 <span>
                 <img src={editImg} alt="edit" />
                   edit</span>
