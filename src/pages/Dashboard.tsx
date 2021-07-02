@@ -2,22 +2,21 @@ import React, { useEffect } from 'react';
 import Timer from "../components/Timer"
 import logo from "../assets/images/logo.svg"
 import clockImg from "../assets/images/clock-icon.svg"
-import avatar from "../assets/images/avatar.svg"
 import playImg from "../assets/images/play-icon.svg"
 import addTaskImg from "../assets/images/add-icon.svg"
 import "../styles/dashboard.scss"
 import TaskList from "../components/TaskList"
 import { useAuth } from '../hooks/useAuth';
 import { useTask } from '../hooks/useTask';
-import ellipsisIcon from "../assets/images/ellipsis-icon.svg"
-import { useState } from 'react';
 import ProfileButton from '../components/ProfileButton';
 import toast, { Toaster } from 'react-hot-toast';
 import { useHistory } from 'react-router-dom';
+import { useTimer } from '../hooks/useTimer';
 
 export function Dashboard(){
   const {user, signInWithGoogle} = useAuth()
   const {handleOpenNewTaskForm} = useTask()
+  const {writeStartTime} = useTimer()
   const history = useHistory()
 
 
@@ -51,7 +50,7 @@ export function Dashboard(){
               <img src={addTaskImg} alt="" />
               <span>add task</span>
               </button>
-            <button className="start-timer-button">
+            <button onClick={writeStartTime} className="start-timer-button">
       
               <img src={playImg} alt="play image" />
               <span>Start Time</span>

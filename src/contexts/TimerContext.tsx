@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useAuth } from "../hooks/useAuth";
 import { useTask } from "../hooks/useTask";
 import { auth, database } from "../services/firebase";
@@ -43,6 +44,10 @@ export function TimerProvider({children} : TimerProviderProps){
   }
 
   const writeStartTime = async () => {
+    if(isTimerOn){
+       toast("Timer already started!")
+      return
+    }
     const startTime = Date.now()
     if(!selectedTask){
       return setTaskNotSelectedError(true)
