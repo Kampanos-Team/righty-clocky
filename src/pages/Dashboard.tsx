@@ -13,10 +13,12 @@ import ellipsisIcon from "../assets/images/ellipsis-icon.svg"
 import { useState } from 'react';
 import ProfileButton from '../components/ProfileButton';
 import toast, { Toaster } from 'react-hot-toast';
+import { useHistory } from 'react-router-dom';
 
 export function Dashboard(){
-  const {user} = useAuth()
-  const {handleWriteNewTask} = useTask()
+  const {user, signInWithGoogle} = useAuth()
+  const {handleOpenNewTaskForm} = useTask()
+  const history = useHistory()
 
 
   useEffect(() => {
@@ -28,7 +30,8 @@ export function Dashboard(){
       } 
     }
 
-  },[user])
+  },[])
+
   return (
     <div id="dashboard">
           <div><Toaster/></div>
@@ -44,7 +47,7 @@ export function Dashboard(){
       </aside>
       <header>
         <div>
-            <button onClick={handleWriteNewTask} className="add-task-button">
+            <button onClick={handleOpenNewTaskForm} className="add-task-button">
               <img src={addTaskImg} alt="" />
               <span>add task</span>
               </button>

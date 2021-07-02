@@ -34,8 +34,14 @@ const Timer: React.FC = () => {
 
   return (
     <div id="timer" style={{ width: 320, height: 320 }}>
-      <CircularProgressbarWithChildren styles={{trail: {  strokeLinecap: 'butt'}, path:{strokeLinecap: 'butt', transition: 'stroke-dashoffset 0.1s ease 0s'}}}
-       className="progress-timer" strokeWidth={6} value={timePercentage}>
+      <CircularProgressbarWithChildren
+       styles={{trail: {  strokeLinecap: 'butt'}, path:{strokeLinecap: 'butt', transition: 'stroke-dashoffset 0.1s ease 0s'}}}
+       className="progress-timer"
+       strokeWidth={6}
+       value={timePercentage}
+       maxValue={60}
+       >
+        
         <span>
         {formattedTime ? formattedTime : "00:00:00"}
         {!isTimerOn ? (

@@ -13,7 +13,12 @@ interface AuthContextData{
 type User = {
   id: string,
   name: string,
-  avatar: string
+  avatar: string,
+  email: string | null
+  phoneNumber: string |null
+  completedTasks? : number
+  taskInProgress?: string,
+  timestampInProgress?: string
 }
 interface AuthProviderProps{
   children: ReactNode;
@@ -22,36 +27,27 @@ export const authContext = createContext({} as AuthContextData)
 export function AuthProvider({children} : AuthProviderProps){
   const [user, setUser]= useState<User>()
 
-
-  const handleCreateUser = async () => {
-
-  }
-  const company = "kampanos"
-
   const signInWithGoogle = async () => {
     const provider = new firebase.auth.GoogleAuthProvider()
     const result  = await auth.signInWithPopup(provider)
       if(result.user){
-        const {displayName, photoURL, uid} = result.user
+        const {displayName, photoURL, uid, email, phoneNumber} = result.user
         if(!displayName || !photoURL){
           throw new Error("Missing information")
         }
-        setUser({id:uid, name:displayName, avatar: photoURL})
+        setUser({id:uid, name:displayName, avatar: photoURL, email:email, phoneNumber: phoneNumber})
+        const usersRef = database.ref('users').child(uid)
+        usersRef.update({
+          id:uid,
+          name:displayName,
+          avatar: photoURL,
+          email:email,
+          phoneNumber: phoneNumber,
+      })
       }
-      console.log(result)
-      // const userRef = database.ref("users");
-
-      // const newUser = await userRef.push({
-      //   avatar: result.user?.photoURL,
-      //   name: result.user?.displayName,
-      //   email: result.user?.email,
-      //   company: company
-
-      // })
-      // history.push(`/admin/rooms/${firebaseRoom.key}`)
     }
 
-    async function signInWithEmailPassword(email:string, password:string) {
+  async function signInWithEmailPassword(email:string, password:string) {
       // [START auth_signIn_password]
       firebase.auth().signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
@@ -70,7 +66,7 @@ export function AuthProvider({children} : AuthProviderProps){
       // [END auth_signIn_password]
     }
 
-    const createUserWithEmailAndPassword = async () => {
+  const createUserWithEmailAndPassword = async () => {
       const email = "bruno@kampanos.pt"
       const password = "Pa55w0rdKampan05"
       const userCredentials = await firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -78,26 +74,29 @@ export function AuthProvider({children} : AuthProviderProps){
       console.log(user)
     }
 
-    const handleSignOut = async () => {
+  const handleSignOut = async () => {
       await auth.signOut()
       setUser(undefined)
       console.log('User signed out!');
     }
+
     useEffect(() => {
-      const unsubscribe = auth.onAuthStateChanged(user => {
+      const unsubscribe = auth.onAuthStateChanged(async user => {
         if(user){
           const {displayName, photoURL, uid} = user
           if(!displayName || !photoURL){
             throw new Error("Missing information")
           }
-          setUser({id:uid, name:displayName, avatar: photoURL})
-
+          const userRef = await database.ref('users').child(uid).get()
+          const userData:User = userRef.val()
+          setUser(userData)
         }
       })
       return () => {
         unsubscribe()
       }
     },[])
+    
     return (
       <authContext.Provider value={{signInWithGoogle, user, handleSignOut, signInWithEmailPassword, createUserWithEmailAndPassword}}>
       {children}

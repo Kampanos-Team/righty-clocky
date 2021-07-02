@@ -19,15 +19,19 @@ export function useTask(){
     newTaskForm,
     setNewTaskForm, 
     taskNotSelectedError,
-    setTaskNotSelectedError
+    setTaskNotSelectedError,
+    projects
   } = useContext(taskContext)
+
+  const [selectedProjectName, setSelectedProjectName] = useState<any>()
   
   const handleCloseForm =  () => {
     setNewTaskForm("")
     setIsNewTaskOpen(false)
     setIsEditTaskOpen(undefined)
   }
-  const handleWriteNewTask = () => {
+  const handleOpenNewTaskForm = () => {
+    setSelectedProjectName(projects[0].name)
     setIsEditTaskOpen(undefined)
     setIsNewTaskOpen(!isNewTaskOpen)
   }
@@ -40,8 +44,9 @@ export function useTask(){
       return
     }
     if(isNewTaskOpen){
-     await database.ref("companies/tasks").push({
+     await database.ref(`companies/tasks`).push({
         title: newTaskForm,
+        project: selectedProjectName,
         authorId: user.id,
         isCompleted: false,
         isInProgress: false
@@ -82,7 +87,9 @@ export function useTask(){
       .update({
         title: newTaskForm,
         authorId: user.id,
-        isCompleted: false
+        isCompleted: false,
+        projectId: selectedProjectName,
+        project : ""
       })
       handleCloseForm()
   }
@@ -97,6 +104,21 @@ export function useTask(){
     })
   }
 
+  const handleSetTaskProgress = async () => {
+    if(!user){
+      return;
+    }
+    if(newTaskForm.trim() === ""){
+      return
+    }
+      const taskRef = await database.ref(`companies/tasks/${isEditTaskOpen}`)
+      .update({
+        title: newTaskForm,
+        authorId: user.id,
+        isCompleted: false
+      })
+  }
+
   return {
       tasks,
       selectedTask,
@@ -108,10 +130,13 @@ export function useTask(){
       newTaskForm,
       setNewTaskForm,
       handleCloseForm,
-      handleWriteNewTask,
+      handleOpenNewTaskForm,
       handleAddTask,
       handleEditTask,
       taskNotSelectedError,
       setTaskNotSelectedError,
+      projects,
+      setSelectedProjectName,
+      selectedProjectName
   }
 }
