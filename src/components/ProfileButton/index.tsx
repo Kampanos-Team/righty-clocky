@@ -7,15 +7,20 @@ import "./styles.scss"
 import { useTask } from '../../hooks/useTask';
 import ellipsisIcon from "../../assets/images/ellipsis-icon.svg"
 import { useHistory } from 'react-router-dom';
+import { useTimer } from '../../hooks/useTimer';
 
 const ProfileButton = () => {
   const history = useHistory()
 
   const {user, handleSignOut} = useAuth()
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false)
+  const {writeEndTime,setStartCounterTime,setFormattedTime  } = useTimer()
 
   const signOut = async () => {
-    handleSignOut()
+    await writeEndTime()
+    setStartCounterTime(0)
+    setFormattedTime("")
+    await handleSignOut() 
     history.push("/")
   }
 

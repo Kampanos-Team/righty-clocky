@@ -8,10 +8,12 @@ interface TimerContextData{
   isTimerOn: boolean,
   setIsTimerOn: React.Dispatch<React.SetStateAction<boolean>>
   time:number
-  writeStartTime: () => void
-  writeEndTime: () => void
+  writeStartTime: () => Promise<void>
+  writeEndTime:   () => Promise<void>
   formattedTime: string
   timePercentage: number
+  setStartCounterTime: React.Dispatch<any>
+  setFormattedTime: React.Dispatch<React.SetStateAction<string>>
 }
 interface TimerProviderProps {
   children: ReactNode;
@@ -71,16 +73,18 @@ export function TimerProvider({children} : TimerProviderProps){
       }
 
     }
+    return;
   };
 
   useEffect(() => {
+    //counter functionality
     let interval = null as any
     if (isTimerOn) {
       interval = setInterval(() => {
-        let inter = Date.now() - startCounterTime
-        setTime(inter)
-        setFormattedTime(new Date(inter).toISOString().substr(11, 8))
-        setTimePercentage((inter / 1000)/60)
+        let newInterval = Date.now() - startCounterTime
+        setTime(newInterval)
+        setFormattedTime(new Date(newInterval).toISOString().substr(11, 8))
+        setTimePercentage((newInterval / 1000)/60)
         // if(timePercentage >= 100){
         //   setTimePercentage(1)
         // }
@@ -132,10 +136,11 @@ export function TimerProvider({children} : TimerProviderProps){
     setIsTimerOn(false)
     setStartCounterTime(undefined)
     // setTimestampId(null)
+    return;
     }
 
   return(
-    <timerContext.Provider value={{ timePercentage, formattedTime, isTimerOn, setIsTimerOn, writeStartTime, writeEndTime, time}}>
+    <timerContext.Provider value={{ timePercentage, setFormattedTime, formattedTime, isTimerOn, setIsTimerOn, writeStartTime, writeEndTime, time, setStartCounterTime}}>
       {children}
     </timerContext.Provider>
   )
