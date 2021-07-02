@@ -39,7 +39,7 @@ const TaskList = () => {
           isActive = {task.id === selectedTask}
           isCompleted = {task.isCompleted}
           title={task.title}
-          taskNumber={index}
+          projectTag={task.projectTag}
           />
       ))}
          </div>
