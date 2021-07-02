@@ -45,14 +45,14 @@ const TaskList = () => {
         <img src={arrowImg} alt="arrow up" />
       </button>
       <div className="task-scroll">
-      {tasks.map((task:any, index:any) => (
+      {tasks.map((task:any) => (
         <Task
           key={task.id}
           taskId={task.id}
           isActive = {task.id === selectedTask}
           isCompleted = {task.isCompleted}
           title={task.title}
-          taskNumber={task.tag}
+          projectTag={task.projectTag}
           isInProgress ={task.isInProgress}
           projectName={task.projectName}
           />
