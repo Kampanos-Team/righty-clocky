@@ -33,6 +33,9 @@ type Task = {
   isCompleted: boolean
   inProgress: string
   isInProgress: boolean
+  projectName: string
+  projectTag: string
+  projectId :string
 }
 
 type Project = {
@@ -43,6 +46,7 @@ type Project = {
 
 export const taskContext = createContext({} as TaskContextData);
 export function TaskProvider({children} : TaskProviderProps){
+
   const [tasks, setTasks] = useState<Task[]>([])
   const [projects, setProjects] = useState<Project[]>([])
 
@@ -67,14 +71,18 @@ export function TaskProvider({children} : TaskProviderProps){
           isCompleted: value.isCompleted,
           title: value.title,
           inProgress: value.inProgress,
-          isInProgress: value.isInProgress
+          isInProgress: value.isInProgress,
+          projectId: value.projectId,
+          projectName: value.projectName,
+          projectTag: value.projectTag
+
         }
     })
       setTasks(parsedTasks)
     })
 
     const projectsRef = database.ref("companies/projects")
-    projectsRef.once("value", project => {
+    projectsRef.on("value", project => {
       const projectData = project.val()
       const firebaseProjects : FirebaseProjects = projectData ?? {}
       const parsedProjects = Object.entries(firebaseProjects).map(([key, value]) =>{
@@ -84,6 +92,7 @@ export function TaskProvider({children} : TaskProviderProps){
           tag: value.tag
         }
       })
+      setSelectedProjectName(parsedProjects[0].name)
       setProjects(parsedProjects)
       console.log(parsedProjects)
     })

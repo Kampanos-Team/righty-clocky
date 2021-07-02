@@ -22,9 +22,10 @@ type TaskProps = {
   isCompleted: boolean
   isInProgress: boolean
   projectName : string
+  projectTag?: string
 }
 
-const Task = ({isActive = false, title , taskNumber , taskId, isCompleted, isInProgress , projectName}: TaskProps) => {
+const Task = ({isActive = false, title , taskNumber , taskId, isCompleted, isInProgress , projectName, projectTag}: TaskProps) => {
   const {isTimerOn, setIsTimerOn, writeEndTime} = useTimer()
   const {user, signInWithGoogle} = useAuth()
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false)
@@ -42,6 +43,7 @@ const Task = ({isActive = false, title , taskNumber , taskId, isCompleted, isInP
     setIsEditTaskOpen(taskId)
     setIsNewTaskOpen(false)
     setSelectedProjectName(projectName)
+    console.log(projectName)
   }
   const handleDeleteTask = async () => {
     if(isInProgress){

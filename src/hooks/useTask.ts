@@ -32,11 +32,15 @@ export function useTask(){
     setIsEditTaskOpen(undefined)
   }
   const handleOpenNewTaskForm = () => {
-    setSelectedProjectName(projects[0].name)
     setIsEditTaskOpen(undefined)
     setIsNewTaskOpen(!isNewTaskOpen)
   }
   const handleAddTask = async (event: FormEvent) => {
+    let tag = ""
+    projects.forEach((project) =>{
+      if(project.name === selectedProjectName) tag = project.tag
+    })
+
     event.preventDefault()
     if(!user){
       return;
@@ -47,7 +51,8 @@ export function useTask(){
     if(isNewTaskOpen){
      await database.ref(`companies/tasks`).push({
         title: newTaskForm,
-        project: selectedProjectName,
+        projectName: selectedProjectName,
+        projectTag: tag,
         authorId: user.id,
         isCompleted: false,
         isInProgress: false
@@ -78,6 +83,10 @@ export function useTask(){
 
   const handleEditTask = async (event:FormEvent) =>{
     event.preventDefault()
+    let tag = ""
+    projects.forEach((project) =>{
+      if(project.name === selectedProjectName) tag = project.tag
+    })
     if(!user){
       return;
     }
@@ -89,8 +98,8 @@ export function useTask(){
         title: newTaskForm,
         authorId: user.id,
         isCompleted: false,
-        projectId: selectedProjectName,
-        project : ""
+        projectName: selectedProjectName,
+        projectTag: tag
       })
       handleCloseForm()
   }
