@@ -28,7 +28,7 @@ const Task = ({isActive = false, title , taskNumber , taskId, isCompleted, isInP
   const {isTimerOn, setIsTimerOn, writeEndTime} = useTimer()
   const {user, signInWithGoogle} = useAuth()
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false)
-  const {setSelectedTask, setIsEditTaskOpen, setIsNewTaskOpen, setNewTaskForm, taskNotSelectedError, setSelectedProjectName, selectedProjectName } = useTask()
+  const {setSelectedTask, setIsEditTaskOpen, setIsNewTaskOpen, setNewTaskForm, taskNotSelectedError, setSelectedProjectName } = useTask()
 
   const handleCompleteTask = async () =>{
     if(window.confirm("Complete this task?")){

@@ -15,15 +15,18 @@ interface TaskContextData{
   setNewTaskForm: React.Dispatch<React.SetStateAction<string>>
   taskNotSelectedError: boolean
   setTaskNotSelectedError: React.Dispatch<React.SetStateAction<boolean>>
+  selectedProjectName: any
+  setSelectedProjectName: React.Dispatch<any>
 }
 
 type FirebaseTasks = Record<string, Task>
 
 type FirebaseProjects = Record<string, Project>
 
-interface TaskProviderProps {
+type TaskProviderProps = {
   children: ReactNode;
 }
+
 type Task = {
   authorId: string
   title: string
@@ -41,13 +44,14 @@ type Project = {
 export const taskContext = createContext({} as TaskContextData);
 export function TaskProvider({children} : TaskProviderProps){
   const [tasks, setTasks] = useState<Task[]>([])
+  const [projects, setProjects] = useState<Project[]>([])
+
   const [selectedTask, setSelectedTask] = useState<string | undefined>()
   const [isEditTaskOpen, setIsEditTaskOpen] = useState<string | undefined>()
   const [isNewTaskOpen, setIsNewTaskOpen] = useState<boolean>(false)
   const [newTaskForm, setNewTaskForm] = useState<string>("")
   const [taskNotSelectedError, setTaskNotSelectedError] = useState<boolean>(false)
-  const [projects, setProjects] = useState<Project[]>([])
-
+  const [selectedProjectName, setSelectedProjectName] = useState<any>()
 
     // fetch task data
   useEffect(() => {
@@ -105,7 +109,9 @@ export function TaskProvider({children} : TaskProviderProps){
       isNewTaskOpen, 
       setIsNewTaskOpen, 
       newTaskForm, 
-      setNewTaskForm
+      setNewTaskForm,
+      selectedProjectName,
+      setSelectedProjectName
       }}>
       {children}
     </taskContext.Provider>

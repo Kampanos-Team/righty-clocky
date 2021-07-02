@@ -87,11 +87,13 @@ const TaskList = () => {
       {!isNewTaskOpen && isEditTaskOpen && (
         <form onSubmit={(event) => handleEditTask(event)}>
         <div>
-          <select defaultValue={selectedProjectName} value={selectedProjectName} onChange={(event) => setSelectedProjectName(event.target.value)} >
+          <select onChange={(event) => setSelectedProjectName(event.target.value)} >
             {projects.map((project => {
-              <option selected key={project.id} value={project.name}>
-              {project.tag}
-              </option>
+              return(
+                <option selected={project.name === selectedProjectName} key={project.id} value={project.name}>
+                {project.tag}
+                </option>
+              )
               }
             )) 
             }
