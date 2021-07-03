@@ -82,10 +82,8 @@ export function TimerProvider({children} : TimerProviderProps){
       interval = setInterval(() => {
         let newInterval = Date.now() - startCounterTime
         setFormattedTime(new Date(newInterval).toISOString().substr(11, 8))
-        setTimePercentage((newInterval / 1000)/60)
-        // if(timePercentage >= 100){
-        //   setTimePercentage(1)
-        // }
+        //Percentage formula Math.floor((time/1000*2.777777777777778*100)/100)
+        setTimePercentage(Math.floor((newInterval/1000*2.777777777777778*100)/100))
       }, 1);
     }else if (!isTimerOn) {
       clearInterval(interval);
