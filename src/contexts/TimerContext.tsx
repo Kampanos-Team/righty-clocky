@@ -8,7 +8,6 @@ import { authContext } from "./AuthContext";
 interface TimerContextData{
   isTimerOn: boolean,
   setIsTimerOn: React.Dispatch<React.SetStateAction<boolean>>
-  time:number
   writeStartTime: () => Promise<void>
   writeEndTime:   () => Promise<void>
   formattedTime: string
@@ -33,19 +32,14 @@ export function TimerProvider({children} : TimerProviderProps){
 
   const [isTimerOn, setIsTimerOn] = useState<boolean>(false)
   const [timestampId, setTimestampId] = useState<string | null>()
-  const [time, setTime] = useState<number>(0)
   const [formattedTime, setFormattedTime] = useState<string>("")
   const [startCounterTime, setStartCounterTime] = useState<any>(0)
   const [timePercentage, setTimePercentage] = useState<number>(0)
 
 
-  const handleTimeCounter = () => {
-    //logica do timer
-  }
-
   const writeStartTime = async () => {
     if(isTimerOn){
-       toast("Timer already started!")
+      toast("Timer already started!")
       return
     }
     const startTime = Date.now()
@@ -87,12 +81,9 @@ export function TimerProvider({children} : TimerProviderProps){
     if (isTimerOn) {
       interval = setInterval(() => {
         let newInterval = Date.now() - startCounterTime
-        setTime(newInterval)
         setFormattedTime(new Date(newInterval).toISOString().substr(11, 8))
-        setTimePercentage((newInterval / 1000)/60)
-        // if(timePercentage >= 100){
-        //   setTimePercentage(1)
-        // }
+        //Percentage formula Math.floor((time/1000*2.777777777777778*100)/100)
+        setTimePercentage(Math.floor((newInterval/1000*2.777777777777778*100)/100))
       }, 1);
     }else if (!isTimerOn) {
       clearInterval(interval);
@@ -145,7 +136,7 @@ export function TimerProvider({children} : TimerProviderProps){
     }
 
   return(
-    <timerContext.Provider value={{ timePercentage, setFormattedTime, formattedTime, isTimerOn, setIsTimerOn, writeStartTime, writeEndTime, time, setStartCounterTime}}>
+    <timerContext.Provider value={{ timePercentage, setFormattedTime, formattedTime, isTimerOn, setIsTimerOn, writeStartTime, writeEndTime, setStartCounterTime}}>
       {children}
     </timerContext.Provider>
   )

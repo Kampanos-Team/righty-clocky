@@ -17,8 +17,7 @@ import { useTimer } from '../../hooks/useTimer';
 
 const Timer: React.FC = () => {
   const {user, signInWithGoogle} = useAuth()
-  const {isTimerOn, setIsTimerOn, writeStartTime, writeEndTime, formattedTime, timePercentage } = useTimer()
-
+  const {isTimerOn, writeStartTime, writeEndTime, formattedTime, timePercentage } = useTimer()
   //convert milliseconds to minutes, seconds, hours formula
   // const minutes = ("0" + Math.floor((time / 60000) % 60)).slice(-2)
   // const seconds = ("0" + Math.floor((time / 1000) % 60)).slice(-2)
@@ -32,8 +31,8 @@ const Timer: React.FC = () => {
        styles={{trail: {  strokeLinecap: 'butt'}, path:{strokeLinecap: 'butt', transition: 'stroke-dashoffset 0.1s ease 0s'}}}
        className="progress-timer"
        strokeWidth={6}
-       value={timePercentage}
-       maxValue={60}
+       value={Number(timePercentage.toString().slice(-4))}
+       maxValue={10000}
        >
         
         <span>
