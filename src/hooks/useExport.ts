@@ -2,6 +2,7 @@ import {useContext, useEffect, useState} from "react"
 import {authContext} from "../contexts/AuthContext"
 import { taskContext } from "../contexts/TaskContext"
 import { database } from "../services/firebase"
+import { useTimer } from "./useTimer"
 
 type FirebaseTimestamps = Record<string,Timestamp> 
 
@@ -36,6 +37,7 @@ type Timestamp =
 export function useExport(){
   const {user} = useContext(authContext)
   const {exportData, setExportData} = useContext(taskContext)
+  const {isTimerOn} = useTimer()
   //Header for CSV
   const headers = [
     { label: "Name", key: "name" },
@@ -68,16 +70,20 @@ export function useExport(){
             project: value.project
           }
         })
-        const filteredDataByUser = parsedTimestamps.map((item:any) => {
-          if(item.name === user.name){
-            return item
+        const filteredDataByUser = [] as any
+         parsedTimestamps.forEach((item:any) => {
+          if(item !== undefined && item.name === user.name){
+            filteredDataByUser.push(item)
           }
         })
-        setExportData(filteredDataByUser)
+        console.log(filteredDataByUser)
+        if(filteredDataByUser){
+          setExportData(filteredDataByUser)
+        }
       }
     }
     getUserTimestamps()
-  }, [user])
+  }, [user, isTimerOn])
 
   //all users
   const getAllUsersTimestamps = async () => {
