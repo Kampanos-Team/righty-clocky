@@ -59,6 +59,7 @@ export function useExport(){
           endTime:value.endTime,
           totalHours:value.totalHours,
           task:value.taskId,
+          project: value.project
         }
       })
       console.log(parsedTimestamps)

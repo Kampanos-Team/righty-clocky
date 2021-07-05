@@ -27,7 +27,7 @@ type Timestamp = {
 
 export const timerContext = createContext({} as TimerContextData);
 export function TimerProvider({children} : TimerProviderProps){
-  const {setSelectedTask, selectedTask, setTaskNotSelectedError} = useTask()
+  const {setSelectedTask, selectedTask, setTaskNotSelectedError, selectedProjectName} = useTask()
   const {user, signInWithGoogle} = useAuth()
 
   const [isTimerOn, setIsTimerOn] = useState<boolean>(false)
@@ -53,7 +53,8 @@ export function TimerProvider({children} : TimerProviderProps){
         userId: user.id,
         startTime: new Date(startTime).toString(),
         taskId: selectedTask,
-        userName: user.name
+        userName: user.name,
+        project: selectedProjectName
       })
       //set task in progress
       const taskRef = database.ref(`companies/tasks/${selectedTask}`)
