@@ -54,7 +54,8 @@ export function TimerProvider({children} : TimerProviderProps){
         startTime: new Date(startTime).toString(),
         taskId: selectedTask,
         userName: user.name,
-        project: selectedProjectName
+        project: selectedProjectName,
+        createdAt: Date.now()
       })
       //set task in progress
       const taskRef = database.ref(`companies/tasks/${selectedTask}`)
