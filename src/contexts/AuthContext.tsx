@@ -59,8 +59,6 @@ export function AuthProvider({children} : AuthProviderProps){
           const usersRef = database.ref('users').child(uid)
           usersRef.update({
             id:uid,
-            name:displayName,
-            avatar: photoURL,
             email:email,
             phoneNumber: phoneNumber,
         })
@@ -68,9 +66,8 @@ export function AuthProvider({children} : AuthProviderProps){
           history.push("/dashboard")
           }
       } catch (error) {
-        const errorCode = error.code;
         const errorMessage = error.message;
-        throw console.error(error)
+        throw console.error(errorMessage)
       }
       // [END auth_signIn_password]
     }
@@ -106,8 +103,7 @@ export function AuthProvider({children} : AuthProviderProps){
     },[])
     
     return (
-
-      <authContext.Provider value={{signInWithGoogle, user, handleSignOut, signInWithEmailPassword, createUserWithEmailAndPassword}}>
+    <authContext.Provider value={{signInWithGoogle, user, handleSignOut, signInWithEmailPassword, createUserWithEmailAndPassword}}>
       {children}
     </authContext.Provider>
     )

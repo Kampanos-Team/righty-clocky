@@ -31,12 +31,12 @@ export function Dashboard(){
 
   },[])
 
-  // if(!user){
-  //   return(
-  //     <div>
-  //     </div>
-  //   )
-  // }
+  if(!user){
+    return(
+      <div>
+      </div>
+    )
+  }
   return (
     <div id="dashboard">
           <div><Toaster/></div>
