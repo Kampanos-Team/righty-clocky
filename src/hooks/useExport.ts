@@ -62,22 +62,30 @@ export function useExport(){
           project: value.project
         }
       })
-      console.log(parsedTimestamps)
-      // snapshot.forEach(function(data) {
-      //     console.log(data.key);
-      // })
       setExportData(parsedTimestamps)
-      return 
+      return; 
     }
   }
-  //format data
-
-
-
-
-  //export data
-
-  // const data = getUserTimestamps()
+  const getAllUsersTimestamps = async () => {
+    if(user){
+      const timestampRef = database.ref("companies/timestamps")
+      const filterData = await (await timestampRef.orderByChild("userId").once("value")).val()
+      console.log(filterData);
+      const firebaseTimestamps: FirebaseTimestamps = filterData ?? {}
+      const parsedTimestamps = Object.entries(firebaseTimestamps).map(([key, value]) =>{
+        return {
+          name: user.name,
+          startTime:value.startTime,
+          endTime:value.endTime,
+          totalHours:value.totalHours,
+          task:value.taskId,
+          project: value.project
+        }
+      })
+      setExportData(parsedTimestamps)
+      return; 
+    }
+  }
 
   return {headers, exportData, getUserTimestamps}
 }

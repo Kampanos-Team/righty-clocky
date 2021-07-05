@@ -114,21 +114,6 @@ export function useTask(){
     })
   }
 
-  const handleSetTaskProgress = async () => {
-    if(!user){
-      return;
-    }
-    if(newTaskForm.trim() === ""){
-      return
-    }
-      const taskRef = await database.ref(`companies/tasks/${isEditTaskOpen}`)
-      .update({
-        title: newTaskForm,
-        authorId: user.id,
-        isCompleted: false
-      })
-  }
-
   return {
       tasks,
       selectedTask,
