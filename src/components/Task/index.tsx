@@ -25,7 +25,7 @@ type TaskProps = {
 }
 
 const Task = ({isActive = false, title , taskId, isCompleted, isInProgress , projectName, projectTag}: TaskProps) => {
-  const {isTimerOn, setIsTimerOn, writeEndTime} = useTimer()
+  const {isTimerOn, setIsTimerOn, handleEndTimer, handleStartTimer} = useTimer()
   const {user, signInWithGoogle} = useAuth()
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false)
   const {setSelectedTaskId, setSelectedTaskName, setIsEditTaskOpen, setIsNewTaskOpen, setNewTaskForm, taskNotSelectedError, setSelectedProjectName } = useTask()
@@ -93,7 +93,7 @@ const Task = ({isActive = false, title , taskId, isCompleted, isInProgress , pro
     if(isTimerOn){
       if(window.confirm("Stop timer and change Task?")){
         setIsTimerOn(false)
-        await writeEndTime()
+        await handleEndTimer()
         setSelectedTaskId(taskId)
         setSelectedTaskName(title)
       }

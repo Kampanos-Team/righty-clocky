@@ -14,7 +14,7 @@ import { useExport } from '../../hooks/useExport';
 const ProfileButton = () => {
   const {headers, exportData} = useExport()
   const history = useHistory()
-  const {writeEndTime,setStartCounterTime,setFormattedTime  } = useTimer()
+  const {handleEndTimer,setStartCounterTime,setFormattedTime  } = useTimer()
   const {user, handleSignOut} = useAuth()
 
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false)
@@ -25,7 +25,7 @@ const ProfileButton = () => {
 
 
   const signOut = async () => {
-    await writeEndTime()
+    await handleEndTimer()
     setStartCounterTime(0)
     setFormattedTime("")
     await handleSignOut() 

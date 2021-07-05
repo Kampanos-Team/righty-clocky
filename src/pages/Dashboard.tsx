@@ -16,7 +16,7 @@ import { useTimer } from '../hooks/useTimer';
 export function Dashboard(){
   const {user, signInWithGoogle} = useAuth()
   const {handleOpenNewTaskForm} = useTask()
-  const {writeStartTime} = useTimer()
+  const {handleStartTimer} = useTimer()
   const history = useHistory()
 
 
@@ -50,7 +50,7 @@ export function Dashboard(){
               <img src={addTaskImg} alt="" />
               <span>add task</span>
               </button>
-            <button onClick={writeStartTime} className="start-timer-button">
+            <button onClick={handleStartTimer} className="start-timer-button">
       
               <img src={playImg} alt="play image" />
               <span>Start Time</span>
@@ -76,8 +76,8 @@ export function Dashboard(){
                 {/* <strong>424 Hours </strong>
                 *Project X*
                 </span> */}
+                </div>
               </div>
-          </div>
           {/* <div className="banner-right">
               <h2>424 Hours</h2>
               <p>*Project X*</p>

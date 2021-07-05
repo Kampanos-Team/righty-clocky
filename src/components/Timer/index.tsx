@@ -17,7 +17,7 @@ import { useTimer } from '../../hooks/useTimer';
 
 const Timer: React.FC = () => {
   const {user, signInWithGoogle} = useAuth()
-  const {isTimerOn, writeStartTime, writeEndTime, formattedTime, timePercentage } = useTimer()
+  const {isTimerOn, formattedTime, timePercentage, handleEndTimer, handleStartTimer } = useTimer()
   //convert milliseconds to minutes, seconds, hours formula
   // const minutes = ("0" + Math.floor((time / 60000) % 60)).slice(-2)
   // const seconds = ("0" + Math.floor((time / 1000) % 60)).slice(-2)
@@ -38,9 +38,9 @@ const Timer: React.FC = () => {
         <span>
         {formattedTime ? formattedTime : "00:00:00"}
         {!isTimerOn ? (
-          <img onClick={writeStartTime} src={playImg} alt="" />
+          <img onClick={handleStartTimer} src={playImg} alt="" />
         ):(
-          <img onClick={writeEndTime} src={pauseImg} alt="" />
+          <img onClick={handleEndTimer} src={pauseImg} alt="" />
         )}
         </span>
       </CircularProgressbarWithChildren>
