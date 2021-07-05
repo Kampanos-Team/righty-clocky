@@ -40,8 +40,8 @@ export function Dashboard(){
           <button className="selected">
             <img src={clockImg} alt="" />
           </button>
-          <button>Calendar</button>
-          <button>Coworkers</button>
+          {/* <button>Calendar</button>
+          <button>Coworkers</button> */}
         </div>
       </aside>
       <header>
@@ -68,10 +68,10 @@ export function Dashboard(){
                 <p>It's the perfect time to start working {":)"}</p>
               </div>
               <div>
-                <span>
+                {/* <span>
                 <strong>8 Hours </strong>
                 left today
-                </span>
+                </span> */}
                 {/* <span> */}
                 {/* <strong>424 Hours </strong>
                 *Project X*
