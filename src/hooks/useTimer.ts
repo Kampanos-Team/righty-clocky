@@ -11,12 +11,13 @@ type Timestamp = {
   startTime: string
   taskId: string
   userName: string
+  taskName: string
 }
 //Percentage formula Math.floor((time/1000*2.777777777777778*100)/100)
 
 export function useTimer(){
   const {user} = useAuth()
-  const {selectedTaskId, setTaskNotSelectedError, selectedTaskName, selectedProjectName, setSelectedTaskId } = useTask()
+  const {selectedTaskId, setTaskNotSelectedError, selectedTaskName, selectedProjectName, setSelectedTaskName, setSelectedTaskId } = useTask()
   const { isTimerOn, setIsTimerOn, formattedTime, timePercentage, setStartCounterTime, setFormattedTime, startCounterTime, setTimePercentage  } = useContext(timerContext)
 
   const [timestampId, setTimestampId] = useState<string | null>()
@@ -36,13 +37,14 @@ export function useTimer(){
     return () => clearInterval(interval);
   },[timestampId, isTimerOn, timePercentage])
 
-  //on page load check if user has timeStamp in progress
+  //on page load check if user has timeStamp in progress and recover it
   useEffect(() => {
     if(user?.timestampInProgress){
       const recoverTimer = async () => {
         const timestampRef = await database.ref("companies/timestamps").child(`${user.timestampInProgress}`).get()
         const timestampData:Timestamp = timestampRef.val()
         setTimestampId(user.timestampInProgress)
+        setSelectedTaskName(timestampData.taskName)
         setTaskNotSelectedError(false)
         setStartCounterTime(new Date(timestampData.startTime))
         setIsTimerOn(true)
@@ -86,6 +88,8 @@ export function useTimer(){
       return setTaskNotSelectedError(true)
     }
     if(user){
+      setStartCounterTime(startTime)
+      setIsTimerOn(true)
       //timestamp route
       const timestampRef = database.ref("companies/timestamps");
       const newTimestamp = await timestampRef.push({
@@ -108,9 +112,8 @@ export function useTimer(){
       })
       if(timestampRef){
         setTaskNotSelectedError(false)
-        setStartCounterTime(startTime)
+
         setTimestampId(newTimestamp.key)
-        setIsTimerOn(true)
       }
     }
     return;

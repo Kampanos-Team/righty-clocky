@@ -14,6 +14,7 @@ type Timestamp =
     taskId:string
     project:string
     taskName: string
+    userName: string
   }
 
 //Query and filter data
@@ -59,7 +60,7 @@ export function useExport(){
         const firebaseTimestamps: FirebaseTimestamps = filterData ?? {}
         const parsedTimestamps = Object.entries(firebaseTimestamps).map(([key, value]) =>{
           return {
-            name: user.name,
+            name: value.userName,
             startTime:value.startTime,
             endTime:value.endTime,
             totalHours:value.totalHours,
