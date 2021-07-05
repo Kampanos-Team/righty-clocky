@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import Collapse from "@kunukn/react-collapse";
 import avatar from "../../assets/images/avatar.svg"
-import { CSVLink } from "react-csv";
+import { CSVLink, CSVDownload } from "react-csv";
 
 import "./styles.scss"
 import { useTask } from '../../hooks/useTask';
@@ -19,6 +19,11 @@ const ProfileButton = () => {
 
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false)
 
+  const handleOpenCollapsible = async () => {
+    setIsProfileOpen(!isProfileOpen)
+    await getUserTimestamps()
+  }
+
 
   const signOut = async () => {
     await writeEndTime()
@@ -30,7 +35,7 @@ const ProfileButton = () => {
 
   return (
     <div className="profile-button" >
-    <button className={`${isProfileOpen && "active"}`} onClick={() => setIsProfileOpen(!isProfileOpen)}>
+    <button className={`${isProfileOpen && "active"}`} onClick={handleOpenCollapsible}>
     {user?.avatar ? (
         <img className="avatar" src={avatar} alt="avatar" />
       ):(
@@ -56,16 +61,17 @@ const ProfileButton = () => {
             <span>Working</span>
           </div>
           <div>
-            <CSVLink data={exportData} headers={headers} asyncOnClick={true} onClick={(event, done) => {
-              getUserTimestamps().then(() => {
-                done() // REQUIRED to invoke the logic of component
-              })
-            }}>
+            <CSVLink
+             data={exportData}
+              headers={headers}
+            >
             Export data
+
             </CSVLink>
             </div>
           <div onClick={signOut}>Sign Out</div>
         </div>
+       
       )}
     />
     </div>
