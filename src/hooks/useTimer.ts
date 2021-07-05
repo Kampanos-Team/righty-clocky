@@ -19,7 +19,6 @@ export function useTimer(){
   const {user} = useAuth()
   const {selectedTaskId, setTaskNotSelectedError, selectedTaskName, selectedProjectName, setSelectedTaskName, setSelectedTaskId } = useTask()
   const { isTimerOn, setIsTimerOn, formattedTime, timePercentage, setStartCounterTime, setFormattedTime, startCounterTime, setTimePercentage  } = useContext(timerContext)
-
   const [timestampId, setTimestampId] = useState<string | null>()
 
   //counter functionality
@@ -35,7 +34,7 @@ export function useTimer(){
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  },[timestampId, isTimerOn, timePercentage])
+  },[timestampId, isTimerOn, timePercentage, startCounterTime, setFormattedTime, setTimePercentage])
 
   //on page load check if user has timeStamp in progress and recover it
   useEffect(() => {
@@ -52,7 +51,7 @@ export function useTimer(){
       }
       recoverTimer()
     }
-  },[user])
+  },[user, setIsTimerOn, setSelectedTaskId, setSelectedTaskName, setStartCounterTime, setTaskNotSelectedError])
 
   const handleEndTimer = async () => {
     if(isTimerOn){

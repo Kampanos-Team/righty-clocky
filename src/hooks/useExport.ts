@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from "react"
+import {useContext, useEffect } from "react"
 import {authContext} from "../contexts/AuthContext"
 import { taskContext } from "../contexts/TaskContext"
 import { database } from "../services/firebase"
@@ -32,7 +32,8 @@ type Timestamp =
 //   { label: "Total Hours", key: "totalHours" },
 // ];
 // const data = [
-//   { name: "user", startTime: "xxxx", endTime: "xxxx", project: "projectX", task: "task1", totalHours: "xxxx" },
+//   { name: "user", startTime: "xxxx", endTime: "xxxx", project: "projectX", task: "task1", totalHours: "xxxx" }
+//],
 
 export function useExport(){
   const {user} = useContext(authContext)
@@ -51,7 +52,6 @@ export function useExport(){
   //Query Data
   //signed user 
   useEffect(() => {
-
     const getUserTimestamps = async () => {
       const currentDate = new Date()
       const startDate = currentDate.setMonth(currentDate.getMonth() - 1)
@@ -83,29 +83,29 @@ export function useExport(){
       }
     }
     getUserTimestamps()
-  }, [user, isTimerOn])
+  }, [user, isTimerOn, setExportData])
 
   //all users
-  const getAllUsersTimestamps = async () => {
-    if(user){
-      const timestampRef = database.ref("companies/timestamps")
-      const filterData = await (await timestampRef.orderByChild("createdAt").once("value")).val()
-      console.log(filterData);
-      const firebaseTimestamps: FirebaseTimestamps = filterData ?? {}
-      const parsedTimestamps = Object.entries(firebaseTimestamps).map(([key, value]) =>{
-        return {
-          name: user.name,
-          startTime:value.startTime,
-          endTime:value.endTime,
-          totalHours:value.totalHours,
-          task:value.taskName,
-          project: value.project
-        }
-      })
-      setExportData(parsedTimestamps)
-      return; 
-    }
-  }
+  // const getAllUsersTimestamps = async () => {
+  //   if(user){
+  //     const timestampRef = database.ref("companies/timestamps")
+  //     const filterData = await (await timestampRef.orderByChild("createdAt").once("value")).val()
+  //     console.log(filterData);
+  //     const firebaseTimestamps: FirebaseTimestamps = filterData ?? {}
+  //     const parsedTimestamps = Object.entries(firebaseTimestamps).map(([key, value]) =>{
+  //       return {
+  //         name: user.name,
+  //         startTime:value.startTime,
+  //         endTime:value.endTime,
+  //         totalHours:value.totalHours,
+  //         task:value.taskName,
+  //         project: value.project
+  //       }
+  //     })
+  //     setExportData(parsedTimestamps)
+  //     return; 
+  //   }
+  // }
 
   return {headers, exportData}
 }

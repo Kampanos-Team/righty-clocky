@@ -1,3 +1,5 @@
+import { FormEvent, useState } from "react"
+import { useHistory } from "react-router-dom"
 
 import { useAuth } from "../hooks/useAuth"
 import heroImg from "../assets/images/hero-login.svg"
@@ -7,8 +9,6 @@ import googleImg from "../assets/images/google-icon.svg"
 import logo from "../assets/images/logo.svg"
 
 import "../styles/login.scss"
-import { useHistory } from "react-router-dom"
-import { FormEvent, useState } from "react"
 
 export function Login(){
   const { user, signInWithGoogle, signInWithEmailPassword } = useAuth()
@@ -88,7 +88,7 @@ export function Login(){
             <span>let's start working guys</span>
           </div>
           <div className="hero">
-            <img src={heroImg} alt="Hero image" />
+            <img src={heroImg} alt="Hero" />
           </div>
         </div>
       </main>

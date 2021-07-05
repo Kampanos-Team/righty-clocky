@@ -1,18 +1,16 @@
-import  { useContext} from 'react';
 import { useState } from 'react';
-import { timerContext } from '../../contexts/TimerContext';
-import { useAuth } from '../../hooks/useAuth';
 import Collapse from "@kunukn/react-collapse";
 
 import closeImg from "../../assets/images/close_small.svg"
 import editImg from "../../assets/images/edit.svg"
 import checkImg from "../../assets/images/check.svg"
 
-import "./styles.scss"
 import { useTask } from '../../hooks/useTask';
 import { database } from '../../services/firebase';
 import toast from 'react-hot-toast';
 import { useTimer } from '../../hooks/useTimer';
+
+import "./styles.scss"
 
 type TaskProps = {
   isActive: boolean,
@@ -25,8 +23,7 @@ type TaskProps = {
 }
 
 const Task = ({isActive = false, title , taskId, isCompleted, isInProgress , projectName, projectTag}: TaskProps) => {
-  const {isTimerOn, setIsTimerOn, handleEndTimer, handleStartTimer} = useTimer()
-  const {user, signInWithGoogle} = useAuth()
+  const {isTimerOn, setIsTimerOn, handleEndTimer } = useTimer()
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false)
   const {setSelectedTaskId, setSelectedTaskName, setIsEditTaskOpen, setIsNewTaskOpen, setNewTaskForm, taskNotSelectedError, setSelectedProjectName } = useTask()
 

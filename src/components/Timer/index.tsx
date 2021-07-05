@@ -1,22 +1,15 @@
-import React, { useContext} from 'react';
-import { timerContext } from '../../contexts/TimerContext';
-import { useAuth } from '../../hooks/useAuth';
+import React from 'react';
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
+import { useTimer } from '../../hooks/useTimer';
 import playImg from "../../assets/images/play-button.svg"
 import pauseImg from "../../assets/images/pause-button.svg"
 
 import "./styles.scss"
-import { database } from '../../services/firebase';
-import { useTask } from '../../hooks/useTask';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { useTimer } from '../../hooks/useTimer';
 
 
 const Timer: React.FC = () => {
-  const {user, signInWithGoogle} = useAuth()
   const {isTimerOn, formattedTime, timePercentage, handleEndTimer, handleStartTimer } = useTimer()
   //convert milliseconds to minutes, seconds, hours formula
   // const minutes = ("0" + Math.floor((time / 60000) % 60)).slice(-2)
@@ -38,9 +31,9 @@ const Timer: React.FC = () => {
         <span>
         {formattedTime ? formattedTime : "00:00:00"}
         {!isTimerOn ? (
-          <img onClick={handleStartTimer} src={playImg} alt="" />
+          <img onClick={handleStartTimer} src={playImg} alt="start" />
         ):(
-          <img onClick={handleEndTimer} src={pauseImg} alt="" />
+          <img onClick={handleEndTimer} src={pauseImg} alt="stop" />
         )}
         </span>
       </CircularProgressbarWithChildren>

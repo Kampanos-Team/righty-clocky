@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import { createContext, ReactNode } from "react";
 import { useHistory } from "react-router-dom";
-import {BrowserRouter, Route, Switch} from "react-router-dom"
-
-
 import {auth, database, firebase} from "../services/firebase"
 
 interface AuthContextData{
@@ -100,7 +97,7 @@ export function AuthProvider({children} : AuthProviderProps){
       return () => {
         unsubscribe()
       }
-    },[])
+    },[history])
     
     return (
     <authContext.Provider value={{signInWithGoogle, user, handleSignOut, signInWithEmailPassword, createUserWithEmailAndPassword}}>

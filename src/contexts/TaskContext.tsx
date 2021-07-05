@@ -1,6 +1,5 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import { auth, database } from "../services/firebase";
-import { authContext } from "./AuthContext";
+import { createContext, ReactNode, useEffect, useState } from "react";
+import { database } from "../services/firebase";
 
 interface TaskContextData{
   tasks: Task[]
@@ -81,12 +80,10 @@ export function TaskProvider({children} : TaskProviderProps){
           projectId: value.projectId,
           projectName: value.projectName,
           projectTag: value.projectTag
-
         }
     })
       setTasks(parsedTasks)
     })
-
     const projectsRef = database.ref("companies/projects")
     projectsRef.on("value", project => {
       const projectData = project.val()
@@ -104,12 +101,11 @@ export function TaskProvider({children} : TaskProviderProps){
     })
     
     return () => {
+      //clean event listeners
       taskRef.off("value")
       projectsRef.off("value")
     }
   },[])
-
-
 
   return(
     <taskContext.Provider value={{

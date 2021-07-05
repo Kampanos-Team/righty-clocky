@@ -4,7 +4,7 @@ import App from './App';
 import { TimerProvider } from './contexts/TimerContext';
 import {AuthProvider} from "./contexts/AuthContext"
 import {TaskProvider} from "./contexts/TaskContext"
-import {BrowserRouter, Route, Switch} from "react-router-dom"
+import {BrowserRouter, Switch} from "react-router-dom"
 
 import "./services/firebase"
 
