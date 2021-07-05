@@ -16,7 +16,7 @@ const TaskList = () => {
   const {user} = useAuth()
   const {
       tasks,
-      selectedTask,
+      selectedTaskId,
       isEditTaskOpen,
       isNewTaskOpen, newTaskForm,
       setNewTaskForm, 
@@ -49,7 +49,7 @@ const TaskList = () => {
         <Task
           key={task.id}
           taskId={task.id}
-          isActive = {task.id === selectedTask}
+          isActive = {task.id === selectedTaskId}
           isCompleted = {task.isCompleted}
           title={task.title}
           projectTag={task.projectTag}

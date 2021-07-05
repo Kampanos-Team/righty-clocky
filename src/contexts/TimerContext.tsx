@@ -27,7 +27,7 @@ type Timestamp = {
 
 export const timerContext = createContext({} as TimerContextData);
 export function TimerProvider({children} : TimerProviderProps){
-  const {setSelectedTask, selectedTask, setTaskNotSelectedError, selectedProjectName} = useTask()
+  const {setSelectedTaskId, selectedTaskId, setTaskNotSelectedError, selectedProjectName} = useTask()
   const {user, signInWithGoogle} = useAuth()
 
   const [isTimerOn, setIsTimerOn] = useState<boolean>(false)
@@ -43,7 +43,7 @@ export function TimerProvider({children} : TimerProviderProps){
       return
     }
     const startTime = Date.now()
-    if(!selectedTask){
+    if(!selectedTaskId){
       return setTaskNotSelectedError(true)
     }
     if(user){
@@ -52,13 +52,13 @@ export function TimerProvider({children} : TimerProviderProps){
       const newTimestamp = await timestampRef.push({
         userId: user.id,
         startTime: new Date(startTime).toString(),
-        taskId: selectedTask,
+        taskId: selectedTaskId,
         userName: user.name,
         project: selectedProjectName,
         createdAt: Date.now()
       })
       //set task in progress
-      const taskRef = database.ref(`companies/tasks/${selectedTask}`)
+      const taskRef = database.ref(`companies/tasks/${selectedTaskId}`)
       const taskUpdate = await taskRef.update({
         isInProgress: true
       })
@@ -72,7 +72,6 @@ export function TimerProvider({children} : TimerProviderProps){
         setTimestampId(newTimestamp.key)
         setIsTimerOn(true)
       }
-
     }
     return;
   };
@@ -104,7 +103,7 @@ export function TimerProvider({children} : TimerProviderProps){
         setTaskNotSelectedError(false)
         setStartCounterTime(new Date(timestampData.startTime))
         setIsTimerOn(true)
-        setSelectedTask(timestampData.taskId)
+        setSelectedTaskId(timestampData.taskId)
       }
       recoverTimer()
       
@@ -122,7 +121,7 @@ export function TimerProvider({children} : TimerProviderProps){
       })
 
     // disable tas in progress
-    const taskRef = database.ref(`companies/tasks/${selectedTask}`)
+    const taskRef = database.ref(`companies/tasks/${selectedTaskId}`)
     const taskUpdate = await taskRef.update({
       isInProgress: false
     })

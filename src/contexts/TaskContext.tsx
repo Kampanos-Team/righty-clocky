@@ -5,8 +5,8 @@ import { authContext } from "./AuthContext";
 interface TaskContextData{
   tasks: Task[]
   projects: Project[]
-  selectedTask: string | undefined
-  setSelectedTask: React.Dispatch<React.SetStateAction<string | undefined>>
+  selectedTaskId: string | undefined
+  setSelectedTaskId: React.Dispatch<React.SetStateAction<string | undefined>>
   isEditTaskOpen: string | undefined
   setIsEditTaskOpen: React.Dispatch<React.SetStateAction<string | undefined>>
   isNewTaskOpen:boolean
@@ -52,7 +52,7 @@ export function TaskProvider({children} : TaskProviderProps){
   const [tasks, setTasks] = useState<Task[]>([])
   const [projects, setProjects] = useState<Project[]>([])
 
-  const [selectedTask, setSelectedTask] = useState<string | undefined>()
+  const [selectedTaskId, setSelectedTaskId] = useState<string | undefined>()
   const [isEditTaskOpen, setIsEditTaskOpen] = useState<string | undefined>()
   const [isNewTaskOpen, setIsNewTaskOpen] = useState<boolean>(false)
   const [newTaskForm, setNewTaskForm] = useState<string>("")
@@ -115,8 +115,8 @@ export function TaskProvider({children} : TaskProviderProps){
       projects,
       taskNotSelectedError,
       setTaskNotSelectedError, 
-      selectedTask, 
-      setSelectedTask, 
+      selectedTaskId, 
+      setSelectedTaskId, 
       isEditTaskOpen, 
       setIsEditTaskOpen, 
       isNewTaskOpen, 

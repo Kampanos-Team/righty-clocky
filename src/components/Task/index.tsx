@@ -28,7 +28,7 @@ const Task = ({isActive = false, title , taskId, isCompleted, isInProgress , pro
   const {isTimerOn, setIsTimerOn, writeEndTime} = useTimer()
   const {user, signInWithGoogle} = useAuth()
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false)
-  const {setSelectedTask, setIsEditTaskOpen, setIsNewTaskOpen, setNewTaskForm, taskNotSelectedError, setSelectedProjectName } = useTask()
+  const {setSelectedTaskId, setIsEditTaskOpen, setIsNewTaskOpen, setNewTaskForm, taskNotSelectedError, setSelectedProjectName } = useTask()
 
   const handleCompleteTask = async () =>{
     if(window.confirm("Complete this task?")){
@@ -62,7 +62,7 @@ const Task = ({isActive = false, title , taskId, isCompleted, isInProgress , pro
     }
     if(window.confirm("Are you sure you want to delete this task?")){
       await database.ref(`companies/tasks/${taskId}`).remove()
-      setSelectedTask(undefined)
+      setSelectedTaskId(undefined)
       toast("Task Deleted",{
         duration: 4000,
         position: 'bottom-center',
@@ -87,13 +87,13 @@ const Task = ({isActive = false, title , taskId, isCompleted, isInProgress , pro
   }
   const handleSelectTask = async () => {
     if(!isTimerOn){
-      setSelectedTask(taskId)
+      setSelectedTaskId(taskId)
     }
     if(isTimerOn){
       if(window.confirm("Stop timer and change Task?")){
         setIsTimerOn(false)
         writeEndTime()
-        setSelectedTask(taskId)
+        setSelectedTaskId(taskId)
       }
     }
   }

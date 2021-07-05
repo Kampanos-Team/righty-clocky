@@ -10,8 +10,8 @@ export function useTask(){
   const {user} = useAuth()
   const {
     tasks,
-    selectedTask,
-    setSelectedTask,
+    selectedTaskId,
+    setSelectedTaskId,
     isEditTaskOpen, 
     setIsEditTaskOpen, 
     isNewTaskOpen,
@@ -116,8 +116,8 @@ export function useTask(){
 
   return {
       tasks,
-      selectedTask,
-      setSelectedTask,
+      selectedTaskId,
+      setSelectedTaskId,
       isEditTaskOpen,
       setIsEditTaskOpen,
       isNewTaskOpen,
