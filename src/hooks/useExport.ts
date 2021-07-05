@@ -70,12 +70,13 @@ export function useExport(){
             project: value.project
           }
         })
-        const filteredDataByUser = [] as any
+        const filteredDataByUser = [] as Timestamp[]
          parsedTimestamps.forEach((item:any) => {
           if(item !== undefined && item.name === user.name){
             filteredDataByUser.push(item)
           }
         })
+        filteredDataByUser.reverse()
         console.log(filteredDataByUser)
         if(filteredDataByUser){
           setExportData(filteredDataByUser)

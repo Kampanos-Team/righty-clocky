@@ -119,6 +119,5 @@ export function useTimer(){
     }
     return;
   };
-  
   return { isTimerOn, setIsTimerOn, formattedTime, timePercentage, setStartCounterTime, setFormattedTime, handleEndTimer, handleStartTimer}
 }

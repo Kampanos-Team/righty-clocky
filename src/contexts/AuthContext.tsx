@@ -19,6 +19,7 @@ type User = {
   completedTasks? : number
   taskInProgress?: string,
   timestampInProgress?: string
+  provider?: string | undefined
 }
 interface AuthProviderProps{
   children: ReactNode;
@@ -36,7 +37,7 @@ export function AuthProvider({children} : AuthProviderProps){
         if(!displayName || !photoURL){
           throw new Error("Missing information")
         }
-        setUser({id:uid, name:displayName, avatar: photoURL, email:email, phoneNumber: phoneNumber})
+        setUser({id:uid, name:displayName, avatar: photoURL, email:email, phoneNumber:phoneNumber, provider:"google"})
         const usersRef = database.ref('users').child(uid)
         usersRef.update({
           id:uid,
@@ -44,6 +45,7 @@ export function AuthProvider({children} : AuthProviderProps){
           avatar: photoURL,
           email:email,
           phoneNumber: phoneNumber,
+          provider: "google"
       })
       }
     }

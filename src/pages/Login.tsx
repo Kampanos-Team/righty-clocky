@@ -29,14 +29,14 @@ export function Login(){
   }
 
   async function handleLoginWIthGoogle() {
-    if(!user){
+    if(user?.provider !== "google"){
       try {
         await signInWithGoogle()
       } catch (error) {
         return console.log(error)
       } 
-      history.push("/dashboard")
     }
+    history.push("/dashboard")
   }
   return(
     <div id="page-login">
