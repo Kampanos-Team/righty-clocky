@@ -12,8 +12,8 @@ type Timestamp =
     endTime:string
     totalHours:string
     taskId:string
-    project?:string
-  
+    project:string
+    taskName: string
   }
 
 //Query and filter data
@@ -31,7 +31,6 @@ type Timestamp =
 // ];
 // const data = [
 //   { name: "user", startTime: "xxxx", endTime: "xxxx", project: "projectX", task: "task1", totalHours: "xxxx" },
-
 
 export function useExport(){
   const {user} = useContext(authContext)
@@ -58,7 +57,7 @@ export function useExport(){
           startTime:value.startTime,
           endTime:value.endTime,
           totalHours:value.totalHours,
-          task:value.taskId,
+          task:value.taskName,
           project: value.project
         }
       })
@@ -78,7 +77,7 @@ export function useExport(){
           startTime:value.startTime,
           endTime:value.endTime,
           totalHours:value.totalHours,
-          task:value.taskId,
+          task:value.taskName,
           project: value.project
         }
       })

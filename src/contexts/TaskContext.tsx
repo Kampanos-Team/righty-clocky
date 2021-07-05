@@ -7,6 +7,8 @@ interface TaskContextData{
   projects: Project[]
   selectedTaskId: string | undefined
   setSelectedTaskId: React.Dispatch<React.SetStateAction<string | undefined>>
+  selectedTaskName: string | undefined 
+  setSelectedTaskName: React.Dispatch<React.SetStateAction<string | undefined>>
   isEditTaskOpen: string | undefined
   setIsEditTaskOpen: React.Dispatch<React.SetStateAction<string | undefined>>
   isNewTaskOpen:boolean
@@ -51,8 +53,8 @@ export function TaskProvider({children} : TaskProviderProps){
 
   const [tasks, setTasks] = useState<Task[]>([])
   const [projects, setProjects] = useState<Project[]>([])
-
   const [selectedTaskId, setSelectedTaskId] = useState<string | undefined>()
+  const [selectedTaskName, setSelectedTaskName] = useState<string | undefined>()
   const [isEditTaskOpen, setIsEditTaskOpen] = useState<string | undefined>()
   const [isNewTaskOpen, setIsNewTaskOpen] = useState<boolean>(false)
   const [newTaskForm, setNewTaskForm] = useState<string>("")
@@ -126,7 +128,9 @@ export function TaskProvider({children} : TaskProviderProps){
       selectedProjectName,
       setSelectedProjectName,
       exportData, 
-      setExportData
+      setExportData,
+      selectedTaskName, 
+      setSelectedTaskName
       }}>
       {children}
     </taskContext.Provider>

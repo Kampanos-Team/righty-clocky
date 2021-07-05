@@ -22,10 +22,11 @@ export function useTask(){
     setTaskNotSelectedError,
     projects,
     selectedProjectName,
-    setSelectedProjectName
+    setSelectedProjectName,
+    selectedTaskName, 
+    setSelectedTaskName
   } = useContext(taskContext)
 
-  
   const handleCloseForm =  () => {
     setNewTaskForm("")
     setIsNewTaskOpen(false)
@@ -132,6 +133,8 @@ export function useTask(){
       setTaskNotSelectedError,
       projects,
       setSelectedProjectName,
-      selectedProjectName
+      selectedProjectName,
+      selectedTaskName, 
+      setSelectedTaskName
   }
 }
