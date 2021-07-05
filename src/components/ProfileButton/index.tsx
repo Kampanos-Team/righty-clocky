@@ -2,19 +2,23 @@ import { useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import Collapse from "@kunukn/react-collapse";
 import avatar from "../../assets/images/avatar.svg"
+import { CSVLink } from "react-csv";
 
 import "./styles.scss"
 import { useTask } from '../../hooks/useTask';
 import ellipsisIcon from "../../assets/images/ellipsis-icon.svg"
 import { useHistory } from 'react-router-dom';
 import { useTimer } from '../../hooks/useTimer';
+import { useExport } from '../../hooks/useExport';
 
 const ProfileButton = () => {
+  const {headers, exportData, getUserTimestamps} = useExport()
   const history = useHistory()
-
-  const {user, handleSignOut} = useAuth()
-  const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false)
   const {writeEndTime,setStartCounterTime,setFormattedTime  } = useTimer()
+  const {user, handleSignOut} = useAuth()
+
+  const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false)
+
 
   const signOut = async () => {
     await writeEndTime()
@@ -51,7 +55,15 @@ const ProfileButton = () => {
           </label>
             <span>Working</span>
           </div>
-          <div>Export data</div>
+          <div>
+            <CSVLink data={exportData} headers={headers} asyncOnClick={true} onClick={(event, done) => {
+              getUserTimestamps().then(() => {
+                done() // REQUIRED to invoke the logic of component
+              })
+            }}>
+            Export data
+            </CSVLink>
+            </div>
           <div onClick={signOut}>Sign Out</div>
         </div>
       )}

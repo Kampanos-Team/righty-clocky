@@ -9,7 +9,7 @@ import { useExport } from "./hooks/useExport";
 
 
 function App() {
-  const {data, headers} = useExport()
+  const {headers, exportData,getUserTimestamps} = useExport()
 
   // const add = async () => {
   //   await database.ref(`companies/projects`).push({
@@ -20,17 +20,19 @@ function App() {
   // }
 
   return (
-  //   <BrowserRouter>
-  //   <Switch>
-  //     <Route path="/" exact component={Login}/>
-  //     <Route path="/dashboard" component={Dashboard}/>
-  //   </Switch>
-  // </BrowserRouter>
-  // <button onClick={add}>add</button>
+    <>
+     <BrowserRouter>
+     <Switch>
+       <Route path="/" exact component={Login}/>
+       <Route path="/dashboard" component={Dashboard}/>
+     </Switch>
+   </BrowserRouter>
+  {/* <button onClick={getUserTimestamps}>add</button>
 
-  <CSVLink data={data} headers={headers}>
+  <CSVLink data={exportData} headers={headers}>
   Download me
-  </CSVLink>
+  </CSVLink> */}
+  </>
   );
 }
 

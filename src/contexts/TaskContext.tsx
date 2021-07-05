@@ -17,6 +17,8 @@ interface TaskContextData{
   setTaskNotSelectedError: React.Dispatch<React.SetStateAction<boolean>>
   selectedProjectName: any
   setSelectedProjectName: React.Dispatch<any>
+  exportData: any
+  setExportData: React.Dispatch<any>
 }
 
 type FirebaseTasks = Record<string, Task>
@@ -56,6 +58,8 @@ export function TaskProvider({children} : TaskProviderProps){
   const [newTaskForm, setNewTaskForm] = useState<string>("")
   const [taskNotSelectedError, setTaskNotSelectedError] = useState<boolean>(false)
   const [selectedProjectName, setSelectedProjectName] = useState<any>()
+  const [exportData, setExportData] = useState<any>([])
+
 
     // fetch task data
   useEffect(() => {
@@ -120,7 +124,9 @@ export function TaskProvider({children} : TaskProviderProps){
       newTaskForm, 
       setNewTaskForm,
       selectedProjectName,
-      setSelectedProjectName
+      setSelectedProjectName,
+      exportData, 
+      setExportData
       }}>
       {children}
     </taskContext.Provider>
