@@ -55,29 +55,31 @@ export function useTimer(){
   },[user])
 
   const handleEndTimer = async () => {
-    const endTime = Date.now()
-    if(!user){
+    if(isTimerOn){
+      const endTime = Date.now()
+      if(!user){
+        return;
+      }
+      await database.ref(`companies/timestamps/${timestampId}`).update({
+        endTime: new Date(endTime).toString(),
+        totalHours: formattedTime
+        })
+      // disable task in progress
+      const taskRef = database.ref(`companies/tasks/${selectedTaskId}`)
+      await taskRef.update({
+        isInProgress: false
+      })
+      
+      await database.ref("users").child(user.id).update({
+        timestampInProgress: null
+      })
+
+      setIsTimerOn(false)
+      setStartCounterTime(undefined)
+      // setTimestampId(null)
       return;
     }
-    await database.ref(`companies/timestamps/${timestampId}`).update({
-      endTime: new Date(endTime).toString(),
-      totalHours: formattedTime
-      })
-    // disable task in progress
-    const taskRef = database.ref(`companies/tasks/${selectedTaskId}`)
-    await taskRef.update({
-      isInProgress: false
-    })
-    
-    await database.ref("users").child(user.id).update({
-      timestampInProgress: null
-    })
-
-    setIsTimerOn(false)
-    setStartCounterTime(undefined)
-    // setTimestampId(null)
-    return;
-    }
+  }
   const handleStartTimer = async () => {
     if(isTimerOn){
       toast("Timer already started!")
