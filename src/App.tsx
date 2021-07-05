@@ -6,10 +6,10 @@ import { useEffect } from "react";
 import { database } from "./services/firebase";
 import { CSVLink } from "react-csv";
 import { useExport } from "./hooks/useExport";
+import { useAuth } from "./hooks/useAuth";
 
 
 function App() {
-  const {headers, exportData} = useExport()
 
   // const add = async () => {
   //   await database.ref(`companies/projects`).push({
@@ -19,19 +19,13 @@ function App() {
   //   })
   // }
 
+
   return (
     <>
-     <BrowserRouter>
      <Switch>
        <Route path="/" exact component={Login}/>
        <Route path="/dashboard" component={Dashboard}/>
      </Switch>
-   </BrowserRouter>
-  {/* <button onClick={getUserTimestamps}>add</button>
-
-  <CSVLink data={exportData} headers={headers}>
-  Download me
-  </CSVLink> */}
   </>
   );
 }

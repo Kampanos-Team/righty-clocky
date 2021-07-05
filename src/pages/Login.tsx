@@ -26,14 +26,17 @@ export function Login(){
       return
     }
     await signInWithEmailPassword(emailInput, passwordInput)
-    history.push("/dashboard")
-    // alert("implementation in progress please sign in with Google")
   }
+
   async function handleLoginWIthGoogle() {
     if(!user){
-      await signInWithGoogle()
+      try {
+        await signInWithGoogle()
+      } catch (error) {
+        return console.log(error)
+      } 
+      history.push("/dashboard")
     }
-    history.push("/dashboard")
   }
   return(
     <div id="page-login">
