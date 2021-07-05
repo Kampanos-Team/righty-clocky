@@ -4,8 +4,12 @@ import { Login } from "./pages/Login";
 import {BrowserRouter, Route, Switch} from "react-router-dom"
 import { useEffect } from "react";
 import { database } from "./services/firebase";
+import { CSVLink } from "react-csv";
+import { useExport } from "./hooks/useExport";
+
 
 function App() {
+  const {headers, exportData,getUserTimestamps} = useExport()
 
   // const add = async () => {
   //   await database.ref(`companies/projects`).push({
@@ -16,15 +20,19 @@ function App() {
   // }
 
   return (
-    <BrowserRouter>
-    <Switch>
-      <Route path="/" exact component={Login}/>
-      <Route path="/dashboard" component={Dashboard}/>
-      {/* <Route path="/rooms/:id" component={Room}/>
-      <Route path="/admin/rooms/:id" component={AdminRoom}/> */}
-    </Switch>
-  </BrowserRouter>
-  // <button onClick={add}>add</button>
+    <>
+     <BrowserRouter>
+     <Switch>
+       <Route path="/" exact component={Login}/>
+       <Route path="/dashboard" component={Dashboard}/>
+     </Switch>
+   </BrowserRouter>
+  {/* <button onClick={getUserTimestamps}>add</button>
+
+  <CSVLink data={exportData} headers={headers}>
+  Download me
+  </CSVLink> */}
+  </>
   );
 }
 
