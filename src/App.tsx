@@ -9,7 +9,7 @@ import { useExport } from "./hooks/useExport";
 
 
 function App() {
-  const {headers, exportData,getUserTimestamps} = useExport()
+  const {headers, exportData} = useExport()
 
   // const add = async () => {
   //   await database.ref(`companies/projects`).push({

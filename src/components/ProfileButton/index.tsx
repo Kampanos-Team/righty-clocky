@@ -12,7 +12,7 @@ import { useTimer } from '../../hooks/useTimer';
 import { useExport } from '../../hooks/useExport';
 
 const ProfileButton = () => {
-  const {headers, exportData, getUserTimestamps} = useExport()
+  const {headers, exportData} = useExport()
   const history = useHistory()
   const {writeEndTime,setStartCounterTime,setFormattedTime  } = useTimer()
   const {user, handleSignOut} = useAuth()
@@ -21,7 +21,6 @@ const ProfileButton = () => {
 
   const handleOpenCollapsible = async () => {
     setIsProfileOpen(!isProfileOpen)
-    await getUserTimestamps()
   }
 
 
@@ -66,7 +65,6 @@ const ProfileButton = () => {
               headers={headers}
             >
             Export data
-
             </CSVLink>
             </div>
           <div onClick={signOut}>Sign Out</div>

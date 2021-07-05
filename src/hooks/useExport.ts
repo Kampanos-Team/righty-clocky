@@ -1,4 +1,4 @@
-import {useContext, useState} from "react"
+import {useContext, useEffect, useState} from "react"
 import {authContext} from "../contexts/AuthContext"
 import { taskContext } from "../contexts/TaskContext"
 import { database } from "../services/firebase"
@@ -35,7 +35,7 @@ type Timestamp =
 export function useExport(){
   const {user} = useContext(authContext)
   const {exportData, setExportData} = useContext(taskContext)
-  
+  //Header for CSV
   const headers = [
     { label: "Name", key: "name" },
     { label: "Start Time", key: "startTime" },
@@ -44,31 +44,45 @@ export function useExport(){
     { label: "Task", key: "task"},
     { label: "Total Hours", key: "totalHours" },
   ];
+
   //Query Data
-  const getUserTimestamps = async () => {
-    if(user){
-      const timestampRef = database.ref("companies/timestamps")
-      const filterData = await (await timestampRef.orderByChild("userId").equalTo(user.id).once("value")).val()
-      console.log(filterData);
-      const firebaseTimestamps: FirebaseTimestamps = filterData ?? {}
-      const parsedTimestamps = Object.entries(firebaseTimestamps).map(([key, value]) =>{
-        return {
-          name: user.name,
-          startTime:value.startTime,
-          endTime:value.endTime,
-          totalHours:value.totalHours,
-          task:value.taskName,
-          project: value.project
-        }
-      })
-      setExportData(parsedTimestamps)
-      return; 
+  //signed user 
+  useEffect(() => {
+
+    const getUserTimestamps = async () => {
+      const currentDate = new Date()
+      const startDate = currentDate.setMonth(currentDate.getMonth() - 1)
+      if(user){
+        const timestampRef = database.ref("companies/timestamps")
+        const filterData = await (await timestampRef.orderByChild("createdAt").startAt(startDate).endAt(Date.now()).once("value")).val()
+        console.log(filterData);
+        const firebaseTimestamps: FirebaseTimestamps = filterData ?? {}
+        const parsedTimestamps = Object.entries(firebaseTimestamps).map(([key, value]) =>{
+          return {
+            name: user.name,
+            startTime:value.startTime,
+            endTime:value.endTime,
+            totalHours:value.totalHours,
+            task:value.taskName,
+            project: value.project
+          }
+        })
+        const filteredDataByUser = parsedTimestamps.map((item:any) => {
+          if(item.name === user.name){
+            return item
+          }
+        })
+        setExportData(filteredDataByUser)
+      }
     }
-  }
+    getUserTimestamps()
+  }, [user])
+
+  //all users
   const getAllUsersTimestamps = async () => {
     if(user){
       const timestampRef = database.ref("companies/timestamps")
-      const filterData = await (await timestampRef.orderByChild("userId").once("value")).val()
+      const filterData = await (await timestampRef.orderByChild("createdAt").once("value")).val()
       console.log(filterData);
       const firebaseTimestamps: FirebaseTimestamps = filterData ?? {}
       const parsedTimestamps = Object.entries(firebaseTimestamps).map(([key, value]) =>{
@@ -86,5 +100,5 @@ export function useExport(){
     }
   }
 
-  return {headers, exportData, getUserTimestamps}
+  return {headers, exportData}
 }
