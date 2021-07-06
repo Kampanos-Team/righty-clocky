@@ -1,7 +1,4 @@
 import { createContext, ReactNode, useState } from "react";
-import toast from "react-hot-toast";
-import { useAuth } from "../hooks/useAuth";
-import { useTask } from "../hooks/useTask";
 
 
 interface TimerContextData{
@@ -27,9 +24,6 @@ export function TimerProvider({children} : TimerProviderProps){
   const [formattedTime, setFormattedTime] = useState<string>("")
   const [startCounterTime, setStartCounterTime] = useState<any>(0)
   const [timePercentage, setTimePercentage] = useState<number>(0)
-
-
-  
 
   return(
     <timerContext.Provider value={{ timePercentage, setFormattedTime, formattedTime, isTimerOn, setIsTimerOn, setStartCounterTime, startCounterTime,setTimePercentage }}>

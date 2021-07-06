@@ -1,3 +1,5 @@
+import { FormEvent, useState } from "react"
+import { useHistory } from "react-router-dom"
 
 import { useAuth } from "../hooks/useAuth"
 import heroImg from "../assets/images/hero-login.svg"
@@ -7,8 +9,6 @@ import googleImg from "../assets/images/google-icon.svg"
 import logo from "../assets/images/logo.svg"
 
 import "../styles/login.scss"
-import { useHistory } from "react-router-dom"
-import { FormEvent, useState } from "react"
 
 export function Login(){
   const { user, signInWithGoogle, signInWithEmailPassword } = useAuth()
@@ -26,12 +26,15 @@ export function Login(){
       return
     }
     await signInWithEmailPassword(emailInput, passwordInput)
-    history.push("/dashboard")
-    // alert("implementation in progress please sign in with Google")
   }
+
   async function handleLoginWIthGoogle() {
-    if(!user){
-      await signInWithGoogle()
+    if(user?.provider !== "google"){
+      try {
+        await signInWithGoogle()
+      } catch (error) {
+        return console.log(error)
+      } 
     }
     history.push("/dashboard")
   }
@@ -57,12 +60,14 @@ export function Login(){
                   onChange={(event) => setEmailInput(event.target.value)}
                   placeholder="your email"
                   type="email"
+                  autoComplete="username"
                   />
                   <input
                   value={passwordInput}
                   onChange={(event) => setPasswordInput(event.target.value)}
                   type="password"
                   placeholder="password"
+                  autoComplete="password"
                   />
                 </div>
                 <button type="submit">Login</button>
@@ -85,7 +90,7 @@ export function Login(){
             <span>let's start working guys</span>
           </div>
           <div className="hero">
-            <img src={heroImg} alt="Hero image" />
+            <img src={heroImg} alt="Hero" />
           </div>
         </div>
       </main>

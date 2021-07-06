@@ -1,23 +1,23 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+
 import Timer from "../components/Timer"
 import logo from "../assets/images/logo.svg"
 import clockImg from "../assets/images/clock-icon.svg"
 import playImg from "../assets/images/play-icon.svg"
 import addTaskImg from "../assets/images/add-icon.svg"
-import "../styles/dashboard.scss"
 import TaskList from "../components/TaskList"
 import { useAuth } from '../hooks/useAuth';
 import { useTask } from '../hooks/useTask';
-import ProfileButton from '../components/ProfileButton';
-import toast, { Toaster } from 'react-hot-toast';
-import { useHistory } from 'react-router-dom';
 import { useTimer } from '../hooks/useTimer';
+import ProfileButton from '../components/ProfileButton';
+
+import "../styles/dashboard.scss"
 
 export function Dashboard(){
-  const {user, signInWithGoogle} = useAuth()
+  const {user} = useAuth()
   const {handleOpenNewTaskForm} = useTask()
   const {handleStartTimer} = useTimer()
-  const history = useHistory()
 
 
   useEffect(() => {
@@ -28,9 +28,14 @@ export function Dashboard(){
         toast(`Welcome`)
       } 
     }
+  },[user])
 
-  },[])
-
+  if(!user){
+    return(
+      <div>
+      </div>
+    )
+  }
   return (
     <div id="dashboard">
           <div><Toaster/></div>
@@ -38,7 +43,7 @@ export function Dashboard(){
         <img src={logo} alt="logo" />
         <div className="aside-buttons">
           <button className="selected">
-            <img src={clockImg} alt="" />
+            <img src={clockImg} alt="clock section" />
           </button>
           {/* <button>Calendar</button>
           <button>Coworkers</button> */}
@@ -47,12 +52,12 @@ export function Dashboard(){
       <header>
         <div>
             <button onClick={handleOpenNewTaskForm} className="add-task-button">
-              <img src={addTaskImg} alt="" />
+              <img src={addTaskImg} alt="add task" />
               <span>add task</span>
               </button>
             <button onClick={handleStartTimer} className="start-timer-button">
       
-              <img src={playImg} alt="play image" />
+              <img src={playImg} alt="start" />
               <span>Start Time</span>
               </button>
             <ProfileButton/>

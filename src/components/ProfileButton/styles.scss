@@ -29,6 +29,7 @@
       width: 18px;
       transition: transform 0.2s;
       transform: rotate(90deg);
+      margin-left: 6px;
   
       &.open{
       transform: rotate(180deg);

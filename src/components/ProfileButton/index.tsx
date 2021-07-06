@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import Collapse from "@kunukn/react-collapse";
 import avatar from "../../assets/images/avatar.svg"
-import { CSVLink, CSVDownload } from "react-csv";
+import { CSVLink } from "react-csv";
 
-import "./styles.scss"
-import { useTask } from '../../hooks/useTask';
 import ellipsisIcon from "../../assets/images/ellipsis-icon.svg"
 import { useHistory } from 'react-router-dom';
 import { useTimer } from '../../hooks/useTimer';
 import { useExport } from '../../hooks/useExport';
+
+import "./styles.scss"
 
 const ProfileButton = () => {
   const {headers, exportData} = useExport()

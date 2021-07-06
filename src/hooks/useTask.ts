@@ -1,5 +1,5 @@
 import { FormEvent } from "react";
-import {useContext, useState} from "react"
+import {useContext} from "react"
 import { taskContext } from '../contexts/TaskContext';
 import { database } from "../services/firebase";
 import { useAuth } from "./useAuth";
@@ -63,17 +63,7 @@ export function useTask(){
       toast.success("Task added",{
         duration: 4000,
         position: 'bottom-center',
-        // Styling
-        style: {},
         className: '',
-        // Custom Icon
-        // icon: '👏',
-        // Change colors of success/error/loading icon
-        // iconTheme: {
-        //   primary: '#000',
-        //   secondary: '#fff',
-        // },
-        // Aria
         ariaProps: {
           role: 'status',
           'aria-live': 'polite',
@@ -94,7 +84,7 @@ export function useTask(){
     if(newTaskForm.trim() === ""){
       return
     }
-      const taskRef = await database.ref(`companies/tasks/${isEditTaskOpen}`)
+      await database.ref(`companies/tasks/${isEditTaskOpen}`)
       .update({
         title: newTaskForm,
         authorId: user.id,
@@ -105,15 +95,15 @@ export function useTask(){
       handleCloseForm()
   }
 
-  const handleCompleteTask = async () =>{
-    if(!user){
-      return;
-    }
-    const taskRef = await database.ref(`companies/tasks/${isEditTaskOpen}`)
-    .update({
-      isCompleted: true
-    })
-  }
+  // const handleCompleteTask = async () =>{
+  //   if(!user){
+  //     return;
+  //   }
+  //   await database.ref(`companies/tasks/${isEditTaskOpen}`)
+  //   .update({
+  //     isCompleted: true
+  //   })
+  // }
 
   return {
       tasks,

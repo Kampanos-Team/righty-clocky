@@ -1,19 +1,12 @@
 import Task from "../Task"
-// import * as Scroll from 'react-scroll'
-// import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 import arrowImg from "../../assets/images/arrow.svg"
 import playIcon from "../../assets/images/play-icon.svg"
-import Select from 'react-select';
 
 import "./styles.scss"
-import { useAuth } from '../../hooks/useAuth';
 import { useTask } from '../../hooks/useTask';
-import { useState } from "react";
-import { useEffect } from "react";
 
 const TaskList = () => {
-  const {user} = useAuth()
   const {
       tasks,
       selectedTaskId,
@@ -29,12 +22,6 @@ const TaskList = () => {
       setSelectedProjectName,
       selectedProjectName
      } = useTask()
-    const [value, setValue] = useState<any>()
-    const handleFormSelector = (event: any) => {
-      const parsedSelection = JSON.parse(event.target.value)
-      console.log(parsedSelection.name)
-      setSelectedProjectName(parsedSelection.name)
-    }
 
   return (
     <div className="task-list">

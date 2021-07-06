@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createContext, ReactNode } from "react";
-
+import { useHistory } from "react-router-dom";
 import {auth, database, firebase} from "../services/firebase"
 
 interface AuthContextData{
@@ -12,13 +12,14 @@ interface AuthContextData{
 }
 type User = {
   id: string,
-  name: string,
-  avatar: string,
+  name?: string | null,
+  avatar?: string | null,
   email: string | null
   phoneNumber: string |null
   completedTasks? : number
   taskInProgress?: string,
   timestampInProgress?: string
+  provider?: string | undefined
 }
 interface AuthProviderProps{
   children: ReactNode;
@@ -26,6 +27,7 @@ interface AuthProviderProps{
 export const authContext = createContext({} as AuthContextData)
 export function AuthProvider({children} : AuthProviderProps){
   const [user, setUser]= useState<User>()
+  const history = useHistory()
 
   const signInWithGoogle = async () => {
     const provider = new firebase.auth.GoogleAuthProvider()
@@ -35,7 +37,7 @@ export function AuthProvider({children} : AuthProviderProps){
         if(!displayName || !photoURL){
           throw new Error("Missing information")
         }
-        setUser({id:uid, name:displayName, avatar: photoURL, email:email, phoneNumber: phoneNumber})
+        setUser({id:uid, name:displayName, avatar: photoURL, email:email, phoneNumber:phoneNumber, provider:"google"})
         const usersRef = database.ref('users').child(uid)
         usersRef.update({
           id:uid,
@@ -43,32 +45,35 @@ export function AuthProvider({children} : AuthProviderProps){
           avatar: photoURL,
           email:email,
           phoneNumber: phoneNumber,
+          provider: "google"
       })
       }
     }
-
-  async function signInWithEmailPassword(email:string, password:string) {
-      // [START auth_signIn_password]
-      firebase.auth().signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
+  const signInWithEmailPassword = async (email:string, password:string) => {
+      try {
+        const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password)
           // Signed in
-          var user = userCredential.user;
-          // ...
-          
-          console.log(user)
+        if(userCredential.user){
+          const {displayName, photoURL, uid, email, phoneNumber} = userCredential.user;
+          const usersRef = database.ref('users').child(uid)
+          usersRef.update({
+            id:uid,
+            email:email,
+            phoneNumber: phoneNumber,
         })
-        .catch((error) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-
-          console.log(errorCode, errorMessage)
-        });
+          setUser({id:uid, name:displayName, avatar: photoURL, email:email, phoneNumber: phoneNumber})
+          history.push("/dashboard")
+          }
+      } catch (error) {
+        const errorMessage = error.message;
+        throw console.error(errorMessage)
+      }
       // [END auth_signIn_password]
     }
 
   const createUserWithEmailAndPassword = async () => {
-      const email = "bruno@kampanos.pt"
-      const password = "Pa55w0rdKampan05"
+      const email = ""
+      const password = "kampanos"
       const userCredentials = await firebase.auth().createUserWithEmailAndPassword(email, password)
       const user = userCredentials.user
       console.log(user)
@@ -79,26 +84,25 @@ export function AuthProvider({children} : AuthProviderProps){
       setUser(undefined)
       console.log('User signed out!');
     }
-
     useEffect(() => {
       const unsubscribe = auth.onAuthStateChanged(async user => {
         if(user){
-          const {displayName, photoURL, uid} = user
-          if(!displayName || !photoURL){
-            throw new Error("Missing information")
-          }
+          const {uid} = user
           const userRef = await database.ref('users').child(uid).get()
           const userData:User = userRef.val()
           setUser(userData)
+        }
+        if(!user){
+          history.push("/")
         }
       })
       return () => {
         unsubscribe()
       }
-    },[])
+    },[history])
     
     return (
-      <authContext.Provider value={{signInWithGoogle, user, handleSignOut, signInWithEmailPassword, createUserWithEmailAndPassword}}>
+    <authContext.Provider value={{signInWithGoogle, user, handleSignOut, signInWithEmailPassword, createUserWithEmailAndPassword}}>
       {children}
     </authContext.Provider>
     )
