@@ -60,12 +60,14 @@ export function Login(){
                   onChange={(event) => setEmailInput(event.target.value)}
                   placeholder="your email"
                   type="email"
+                  autoComplete="username"
                   />
                   <input
                   value={passwordInput}
                   onChange={(event) => setPasswordInput(event.target.value)}
                   type="password"
                   placeholder="password"
+                  autoComplete="password"
                   />
                 </div>
                 <button type="submit">Login</button>

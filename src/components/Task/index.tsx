@@ -86,6 +86,8 @@ const Task = ({isActive = false, title , taskId, isCompleted, isInProgress , pro
     if(!isTimerOn){
       setSelectedTaskId(taskId)
       setSelectedTaskName(title)
+      setSelectedProjectName(projectName)
+
     }
     if(isTimerOn){
       if(window.confirm("Stop timer and change Task?")){
@@ -93,6 +95,8 @@ const Task = ({isActive = false, title , taskId, isCompleted, isInProgress , pro
         await handleEndTimer()
         setSelectedTaskId(taskId)
         setSelectedTaskName(title)
+        setSelectedProjectName(projectName)
+  
       }
     }
   }

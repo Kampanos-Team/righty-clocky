@@ -63,8 +63,8 @@ export function useExport(){
         const parsedTimestamps = Object.entries(firebaseTimestamps).map(([key, value]) =>{
           return {
             name: value.userName,
-            startTime:value.startTime,
-            endTime:value.endTime,
+            startTime: new Date(value.startTime).toLocaleString(),
+            endTime:value.endTime ? new Date(value.endTime).toLocaleString() : "IN PROGRESS",
             totalHours:value.totalHours,
             task:value.taskName,
             project: value.project
