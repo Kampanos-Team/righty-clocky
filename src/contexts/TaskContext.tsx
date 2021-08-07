@@ -97,7 +97,6 @@ export function TaskProvider({children} : TaskProviderProps){
       })
       setSelectedProjectName(parsedProjects[0].name)
       setProjects(parsedProjects)
-      console.log(parsedProjects)
     })
     
     return () => {

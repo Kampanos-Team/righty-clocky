@@ -58,7 +58,6 @@ export function useExport(){
       if(user){
         const timestampRef = database.ref("companies/timestamps")
         const filterData = await (await timestampRef.orderByChild("createdAt").startAt(startDate).endAt(Date.now()).once("value")).val()
-        console.log(filterData);
         const firebaseTimestamps: FirebaseTimestamps = filterData ?? {}
         const parsedTimestamps = Object.entries(firebaseTimestamps).map(([key, value]) =>{
           return {
@@ -77,7 +76,6 @@ export function useExport(){
           }
         })
         filteredDataByUser.reverse()
-        console.log(filteredDataByUser)
         if(filteredDataByUser){
           setExportData(filteredDataByUser)
         }

@@ -10,9 +10,7 @@ function App() {
 
   const add = async () => {
     await database.ref(`companies/projects`).push({
-      name: "Provencial",
-      tag: "PVZ",
-      totalHours: "X"
+
     })
   }
 

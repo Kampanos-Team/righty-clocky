@@ -1,3 +1,5 @@
+//This file contains all the timer functions
+
 import { useEffect, useState } from "react";
 import {useContext} from "react"
 import toast from "react-hot-toast";
@@ -14,27 +16,36 @@ type Timestamp = {
   taskName: string
 }
 //Percentage formula Math.floor((time/1000*2.777777777777778*100)/100)
+const NOTIFICATION_HOURS=3600000 * 8
 
 export function useTimer(){
   const {user} = useAuth()
   const {selectedTaskId, setTaskNotSelectedError, selectedTaskName, selectedProjectName, setSelectedTaskName, setSelectedTaskId } = useTask()
-  const { isTimerOn, setIsTimerOn, formattedTime, timePercentage, setStartCounterTime, setFormattedTime, startCounterTime, setTimePercentage  } = useContext(timerContext)
-  const [timestampId, setTimestampId] = useState<string | null>()
+  const { isTimerOn, setIsTimerOn, formattedTime, timePercentage, setStartCounterTime, setFormattedTime, 
+    setTimestampId, timestampId, setIsNotificationSent, setTimePercentage, startCounterTime  } = useContext(timerContext)
 
-  //counter functionality
-  useEffect(() => {
-    let interval = null as any
-    if (isTimerOn) {
-      interval = setInterval(() => {
-        let newInterval = Date.now() - startCounterTime
-        setFormattedTime(new Date(newInterval).toISOString().substr(11, 8))
-        setTimePercentage(Math.floor((newInterval/1000*2.777777777777778*100)/100))
-      }, 1);
-    }else if (!isTimerOn) {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  },[timestampId, isTimerOn, timePercentage, startCounterTime, setFormattedTime, setTimePercentage])
+    //counter functionality
+    useEffect(() => {
+      let interval = null as any
+      if (isTimerOn) {
+        interval = setInterval(() => {
+          let newInterval = Date.now() - startCounterTime
+          setFormattedTime(new Date(newInterval).toISOString().substr(11, 8))
+          setTimePercentage(Math.floor((newInterval/1000*2.777777777777778*100)/100))
+          if(newInterval >= NOTIFICATION_HOURS ){
+            setIsNotificationSent(true)
+          }
+          if(newInterval >= 3600000+NOTIFICATION_HOURS ){
+            handleEndTimer()
+          }
+        }, 1);
+  
+      }else if (!isTimerOn) {
+        clearInterval(interval);
+      }
+  
+      return () => clearInterval(interval);
+    },[timestampId, isTimerOn, timePercentage, startCounterTime, setFormattedTime, setTimePercentage])
 
   //on page load check if user has timeStamp in progress and recover it
   useEffect(() => {
@@ -49,6 +60,7 @@ export function useTimer(){
         setIsTimerOn(true)
         setSelectedTaskId(timestampData.taskId)
       }
+
       recoverTimer()
     }
   },[user, setIsTimerOn, setSelectedTaskId, setSelectedTaskName, setStartCounterTime, setTaskNotSelectedError])
@@ -75,6 +87,7 @@ export function useTimer(){
 
       setIsTimerOn(false)
       setStartCounterTime(undefined)
+      setIsNotificationSent(false)
       // setTimestampId(null)
       return;
     }
@@ -119,5 +132,8 @@ export function useTimer(){
     }
     return;
   };
+
+
+  
   return { isTimerOn, setIsTimerOn, formattedTime, timePercentage, setStartCounterTime, setFormattedTime, handleEndTimer, handleStartTimer}
 }
