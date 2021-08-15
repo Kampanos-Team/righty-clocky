@@ -48,22 +48,26 @@ export function useTimer(){
     },[timestampId, isTimerOn, timePercentage, startCounterTime, setFormattedTime, setTimePercentage])
 
   //on page load check if user has timeStamp in progress and recover it
-  useEffect(() => {
+  const recoverTimer = async () => {
     if(user?.timestampInProgress){
-      const recoverTimer = async () => {
-        const timestampRef = await database.ref("companies/timestamps").child(`${user.timestampInProgress}`).get()
-        const timestampData:Timestamp = timestampRef.val()
-        setTimestampId(user.timestampInProgress)
-        setSelectedTaskName(timestampData.taskName)
-        setTaskNotSelectedError(false)
-        setStartCounterTime(new Date(timestampData.startTime))
-        setIsTimerOn(true)
-        setSelectedTaskId(timestampData.taskId)
-      }
-
-      recoverTimer()
+      const timestampRef = await database.ref("companies/timestamps").child(`${user.timestampInProgress}`).get()
+      const timestampData:Timestamp = timestampRef.val()
+      setTimestampId(user.timestampInProgress)
+      setSelectedTaskName(timestampData.taskName)
+      setTaskNotSelectedError(false)
+      setStartCounterTime(new Date(timestampData.startTime))
+      setIsTimerOn(true)
+      setSelectedTaskId(timestampData.taskId)
     }
-  },[user, setIsTimerOn, setSelectedTaskId, setSelectedTaskName, setStartCounterTime, setTaskNotSelectedError])
+  }
+
+  // useEffect(() => {
+  //   if(user?.timestampInProgress){
+  //     (async () => {
+  //       await recoverTimer()
+  //     })
+  //   }
+  // },[user, setIsTimerOn, setSelectedTaskId, setSelectedTaskName, setStartCounterTime, setTaskNotSelectedError])
 
   const handleEndTimer = async () => {
     if(isTimerOn){
@@ -135,5 +139,5 @@ export function useTimer(){
 
 
   
-  return { isTimerOn, setIsTimerOn, formattedTime, timePercentage, setStartCounterTime, setFormattedTime, handleEndTimer, handleStartTimer}
+  return { isTimerOn, setIsTimerOn, formattedTime, timePercentage, setStartCounterTime, setFormattedTime, handleEndTimer, handleStartTimer, recoverTimer}
 }

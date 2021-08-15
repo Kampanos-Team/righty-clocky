@@ -30,7 +30,7 @@ export function TimerProvider({children} : TimerProviderProps){
   const [timePercentage, setTimePercentage] = useState<number>(0)
   const [isNotificationSent, setIsNotificationSent,] = useState<boolean>(false)
   const [timestampId, setTimestampId] = useState<string | null>()
-
+  
 
 
   useEffect(() => {

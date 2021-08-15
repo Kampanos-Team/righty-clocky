@@ -17,11 +17,18 @@ import "../styles/dashboard.scss"
 export function Dashboard(){
   const {user} = useAuth()
   const {handleOpenNewTaskForm} = useTask()
-  const {handleStartTimer} = useTimer()
+  const {handleStartTimer, recoverTimer} = useTimer()
 
 
   useEffect(() => {
     if(user){
+    //on page load check if user has timeStamp in progress and recover it
+      if(user?.timestampInProgress){
+        (async () => {
+          await recoverTimer()
+        })()
+      }
+
       if(user?.name){
         toast(`Welcome ${user?.name}`)
       }else{
@@ -29,6 +36,8 @@ export function Dashboard(){
       } 
     }
   },[user])
+
+
 
   if(!user){
     return(
